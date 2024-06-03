@@ -5,6 +5,7 @@ import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Filters;
 import com.expeditors.musictracking.model.enumerator.MediaType;
+import com.expeditors.musictracking.service.TrackBaseService;
 import com.expeditors.musictracking.service.TrackService;
 import com.expeditors.musictracking.utils.UriCreator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.List;
 public class TrackController {
 
     @Autowired
-    private TrackService service;
+    private TrackBaseService service;
 
     @Autowired
     private UriCreator uriCreator;
@@ -110,7 +111,7 @@ public class TrackController {
     public ResponseEntity<?> addTrack(@RequestBody @Valid Track track) {
         Track newTrack = service.insert(track);
 
-        URI uri = uriCreator.getURI(newTrack.getId());
+        URI uri = uriCreator.getURI(newTrack.getTrackId());
 
         return ResponseEntity.created(uri).body(CustomResponse.ofValue(newTrack));
     }
@@ -130,7 +131,7 @@ public class TrackController {
         boolean result = service.update(track);
         if(!result) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(CustomResponse.ofError("Cannot find any track with id: " + track.getId()));
+                    .body(CustomResponse.ofError("Cannot find any track with id: " + track.getTrackId()));
         }
         return ResponseEntity.ok(CustomResponse.ofValue(result));
     }

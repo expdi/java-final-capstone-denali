@@ -154,12 +154,12 @@ public class ArtistTest {
         assertEquals("Manuel Turiso",service.getById(1).getName());
 
 
-        Mockito.when(artistDAO.delete(1)).thenReturn(true);
+        Mockito.when(artistDAO.deleteById(1)).thenReturn(true);
         service.deleteById(1);
 
         Mockito.when(artistDAO.update(artist)).thenReturn(false);
 
-        Mockito.verify(artistDAO).delete(1);
+        Mockito.verify(artistDAO).deleteById(1);
         Mockito.verify(artistDAO).update(artist);
 
         assertFalse(service.update(artist));
@@ -170,7 +170,7 @@ public class ArtistTest {
         Artist artist = artists.get(0);
 
         Mockito.when(artistDAO.insert(artist)).thenReturn(artist);
-        Mockito.when(artistDAO.delete(1)).thenReturn(true);
+        Mockito.when(artistDAO.deleteById(1)).thenReturn(true);
         Mockito.when(artistDAO.findById(1)).thenReturn(null);
 
         service.insert(artist);
@@ -179,7 +179,7 @@ public class ArtistTest {
 
         service.deleteById(1);
 
-        Mockito.verify(artistDAO).delete(1);
+        Mockito.verify(artistDAO).deleteById(1);
 
         assertNull(service.getById(1));
         Mockito.verify(artistDAO).findById(1);

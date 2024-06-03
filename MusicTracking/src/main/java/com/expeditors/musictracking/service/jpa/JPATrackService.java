@@ -1,24 +1,30 @@
-package com.expeditors.musictracking.service;
+package com.expeditors.musictracking.service.jpa;
 
-import com.expeditors.musictracking.dao.BaseDAO;
 import com.expeditors.musictracking.dao.TrackBaseDAO;
+import com.expeditors.musictracking.dao.jpa.JPATrackDAO;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Filters;
 import com.expeditors.musictracking.model.enumerator.MediaType;
 import com.expeditors.musictracking.provider.PriceProvider;
+import com.expeditors.musictracking.service.TrackBaseService;
+import com.expeditors.musictracking.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+import static com.expeditors.musictracking.dao.jpa.JPATrackDAO.Specs.byDuration;
+
 @Service
-@Profile("inmemory")
-public class TrackService implements TrackBaseService {
+@Transactional
+@Profile("jpa")
+public class JPATrackService implements TrackBaseService {
 
     @Autowired
-    private TrackBaseDAO trackDAO;
+    private JPATrackDAO trackDAO;
 
     @Autowired
     private PriceProvider priceProvider;
@@ -28,15 +34,15 @@ public class TrackService implements TrackBaseService {
     }
 
     public Track getById(int id) {
-        Track track = trackDAO.findById(id);
+        Optional<Track> track = trackDAO.findById(id);
         if (track != null) {
-            priceProvider.getTrackPrice(track);
+            priceProvider.getTrackPrice(track.get());
         }
-        return track;
+        return track.get();
     }
 
     public Track insert(Track Track) {
-        return trackDAO.insert(Track);
+        return trackDAO.save(Track);
     }
 
     public List<Track> getByTitle(String title) {
@@ -48,7 +54,7 @@ public class TrackService implements TrackBaseService {
     }
 
     public List<Track> getByMediaType(MediaType mediaType) {
-        return setTrackPrice(trackDAO.findMediaType(mediaType));
+        return setTrackPrice(trackDAO.findByMediaType(mediaType));
     }
 
     public List<Track> getByAlbum(String album) {
@@ -60,15 +66,33 @@ public class TrackService implements TrackBaseService {
     }
 
     public List<Track> getByDuration(double duration, Filters filter) {
-        return trackDAO.findByDuration(duration,filter);
+        return trackDAO.findAll(byDuration(duration,filter));
     }
 
-    public boolean update(Track Track) {
-        return trackDAO.update(Track);
+    public boolean update(Track track) {
+        try {
+            if(!trackDAO.existsById(track.getTrackId())) {
+                return false;
+            }
+            trackDAO.save(track);
+        }
+        catch(Exception ex) {
+            return false;
+        }
+        return true;
     }
 
     public boolean deleteById(int id) {
-        return trackDAO.deleteById(id);
+        try {
+            if(!trackDAO.existsById(id)) {
+                return false;
+            }
+            trackDAO.deleteById(id);
+        }
+        catch(Exception ex) {
+            return false;
+        }
+        return true;
     }
 
     public List<Track> setTrackPrice(List<Track> tracks) {

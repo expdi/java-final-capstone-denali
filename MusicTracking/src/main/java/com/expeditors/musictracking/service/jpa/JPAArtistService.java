@@ -1,38 +1,43 @@
-package com.expeditors.musictracking.service;
+package com.expeditors.musictracking.service.jpa;
 
 
 import com.expeditors.musictracking.dao.ArtistBaseDAO;
 import com.expeditors.musictracking.dao.TrackBaseDAO;
+import com.expeditors.musictracking.dao.jpa.JPAArtistDAO;
+import com.expeditors.musictracking.dao.jpa.JPATrackDAO;
 import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.Role;
+import com.expeditors.musictracking.service.ArtistBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Profile("inmemory")
-public class ArtistService implements ArtistBaseService{
+@Transactional
+@Profile("jpa")
+public class JPAArtistService implements ArtistBaseService {
 
     @Autowired
-    private ArtistBaseDAO artistDAO;
+    private JPAArtistDAO artistDAO;
 
     @Autowired
-    private TrackBaseDAO trackDao;
+    private JPATrackDAO trackDao;
 
     public List<Artist> getAll() {
         return artistDAO.findAll();
     }
 
     public Artist getById(int id) {
-        return artistDAO.findById(id);
+        return artistDAO.findById(id).get();
     }
 
     public Artist insert(Artist artist) {
-        return artistDAO.insert(artist);
+        return artistDAO.save(artist);
     }
 
     public List<Artist> getByName(String name) {
@@ -52,10 +57,28 @@ public class ArtistService implements ArtistBaseService{
     }
 
     public boolean update(Artist artist) {
-        return artistDAO.update(artist);
+        try {
+            if(!artistDAO.existsById(artist.getArtistId())) {
+                return false;
+            }
+            artistDAO.save(artist);
+        }
+        catch(Exception ex) {
+            return false;
+        }
+        return true;
     }
 
     public boolean deleteById(int id) {
-        return artistDAO.deleteById(id);
+        try {
+            if(!artistDAO.existsById(id)) {
+                return false;
+            }
+            artistDAO.deleteById(id);
+        }
+        catch(Exception ex) {
+            return false;
+        }
+        return true;
     }
 }

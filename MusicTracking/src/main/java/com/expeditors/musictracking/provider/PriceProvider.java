@@ -35,7 +35,7 @@ public class PriceProvider {
 
         Optional<Price> price = Optional.ofNullable(result.getBody());
 
-        track.setPrice(price.map(Price::getPrice).orElse(0.0));
+        track.setLastPrice(price.map(Price::getPrice).orElse(0.0));
     }
 
 

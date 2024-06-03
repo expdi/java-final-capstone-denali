@@ -143,12 +143,12 @@ public class TrackTest {
         assertEquals("Wonderful World",service.getById(1).getTitle());
 
 
-        Mockito.when(trackDao.delete(1)).thenReturn(true);
+        Mockito.when(trackDao.deleteById(1)).thenReturn(true);
         service.deleteById(1);
 
         Mockito.when(trackDao.update(track)).thenReturn(false);
 
-        Mockito.verify(trackDao).delete(1);
+        Mockito.verify(trackDao).deleteById(1);
         Mockito.verify(trackDao).update(track);
 
         assertFalse(service.update(track));
@@ -159,7 +159,7 @@ public class TrackTest {
         Track track = tracks.get(0);
 
         Mockito.when(trackDao.insert(track)).thenReturn(track);
-        Mockito.when(trackDao.delete(1)).thenReturn(true);
+        Mockito.when(trackDao.deleteById(1)).thenReturn(true);
         Mockito.when(trackDao.findById(1)).thenReturn(null);
 
         service.insert(track);
@@ -168,7 +168,7 @@ public class TrackTest {
 
         service.deleteById(1);
 
-        Mockito.verify(trackDao).delete(1);
+        Mockito.verify(trackDao).deleteById(1);
 
         assertNull(service.getById(1));
         Mockito.verify(trackDao).findById(1);

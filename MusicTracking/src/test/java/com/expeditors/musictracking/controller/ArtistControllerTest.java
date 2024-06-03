@@ -275,7 +275,7 @@ public class ArtistControllerTest {
 
         assertEquals("Billy Joel", artist.getName());
 
-        artist.setId(100);
+        artist.setArtistId(100);
         updateEntity = mapper.writeValueAsString(artist);
         actions = mockMvc.perform(put("/Artist")
                 .accept(MediaType.APPLICATION_JSON)

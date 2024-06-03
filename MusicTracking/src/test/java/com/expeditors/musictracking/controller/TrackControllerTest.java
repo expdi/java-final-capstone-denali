@@ -342,7 +342,7 @@ public class TrackControllerTest {
 
         assertEquals("Wondeful world", track.getTitle());
 
-        track.setId(100);
+        track.setTrackId(100);
         updateEntity = mapper.writeValueAsString(track);
         actions = mockMvc.perform(put("/Tracks")
                 .accept(MediaType.APPLICATION_JSON)
