@@ -16,7 +16,7 @@ public class PriceProvider {
 
 
     public PriceProvider() {
-        var baseUrl = "http://localhost:8181";
+        var baseUrl = "http://localhost:8082";
         var rootUrl = "/MusicTrackPrice";
         priceUrl = rootUrl + "/{id}";
 
@@ -27,15 +27,15 @@ public class PriceProvider {
                 .build();
     }
 
-    public void getTrackPrice(Track track) {
-        ResponseEntity<Price> result =  restClient.get()
-                .uri(priceUrl, track.getTrackIdentifier())
-                .retrieve()
-                .toEntity(Price.class);
+        public void getTrackPrice(Track track) {
+            ResponseEntity<Price> result =  restClient.get()
+                    .uri(priceUrl, track.getTrackIdentifier())
+                    .retrieve()
+                    .toEntity(Price.class);
 
-        Optional<Price> price = Optional.ofNullable(result.getBody());
+            Optional<Price> price = Optional.ofNullable(result.getBody());
 
-        track.setPrice(price.map(Price::getPrice).orElse(0.0));
+            track.setPrice(price.map(Price::getPrice).orElse(0.0));
     }
 
 
