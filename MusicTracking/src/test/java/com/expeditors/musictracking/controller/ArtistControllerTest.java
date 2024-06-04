@@ -47,7 +47,7 @@ public class ArtistControllerTest {
 
     @Test
     public void getById() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Artist/{id}", 1)
+        MockHttpServletRequestBuilder builder = get("/Artist/{id}", 10)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -154,7 +154,7 @@ public class ArtistControllerTest {
 
     @Test
     public void getTracksByArtist() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Artist/getTracks/{artist}", "Cristina")
+        MockHttpServletRequestBuilder builder = get("/Artist/getTracks/{artist}", "Michael Jackson")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -169,12 +169,12 @@ public class ArtistControllerTest {
 
         assertFalse(artists.isEmpty());
 
-        builder = get("/Artist/getTracks/{artist}","Weber")
+        builder = get("/Artist/getTracks/{artist}","Michael Jackson")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(builder)
-                .andExpect(status().isNotFound());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -229,7 +229,7 @@ public class ArtistControllerTest {
 
         actions.andExpect(status().isCreated());
 
-        actions = mockMvc.perform(delete("/Artist/{id}", 1)
+        actions = mockMvc.perform(delete("/Artist/{id}", 8)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON));
 
@@ -239,7 +239,7 @@ public class ArtistControllerTest {
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     public void updateArtist() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Artist/{id}", 1)
+        MockHttpServletRequestBuilder builder = get("/Artist/{id}", 2)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -261,7 +261,7 @@ public class ArtistControllerTest {
 
         actions.andExpect(status().isOk());
 
-        builder = get("/Artist/{id}", 1)
+        builder = get("/Artist/{id}", 2)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 

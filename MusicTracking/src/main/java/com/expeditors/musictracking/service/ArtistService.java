@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 @Profile("inmemory")
+@Service
 public class ArtistService implements ArtistBaseService{
 
     @Autowired

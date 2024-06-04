@@ -74,5 +74,18 @@ public class Artist {
     @JsonIgnoreProperties("artists")
     List<Track> tracks;
 
+    @Override
+    public String toString() {
+        return "Artist{" +
+                "artistId=" + artistId +
+                ", name='" + name + '\'' +
+                ", height=" + height +
+                ", birthday=" + birthday +
+                ", country='" + country + '\'' +
+                ", musicGenre=" + musicGenre +
+                ", role=" + role +
+                ", tracks=" + tracks +
+                '}';
+    }
 }
 

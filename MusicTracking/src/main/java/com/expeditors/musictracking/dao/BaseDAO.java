@@ -12,7 +12,6 @@ public interface BaseDAO<T> {
 
     boolean deleteById(int id);
 
-
     boolean update(T object);
 
     T findById(int id);
