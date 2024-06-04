@@ -6,6 +6,7 @@ import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.Role;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -71,7 +72,7 @@ public class TrackControllerTest {
 
     @Test
     public void getByTitle() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/getByTitle/{title}", "Love")
+        MockHttpServletRequestBuilder builder = get("/Tracks/getByTitle/{title}", "Viva La Vida")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -96,7 +97,7 @@ public class TrackControllerTest {
 
     @Test
     public void getByAlbum() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/getByAlbum/{album}", "My Love is the end")
+        MockHttpServletRequestBuilder builder = get("/Tracks/getByAlbum/{album}", "Stadium Arcadium")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -121,7 +122,7 @@ public class TrackControllerTest {
 
     @Test
     public void getByArtist() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/getByArtist/{artist}", "Michel Jackson")
+        MockHttpServletRequestBuilder builder = get("/Tracks/getByArtist/{artist}", "Michael Jackson")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -180,7 +181,7 @@ public class TrackControllerTest {
 
     @Test
     public void getByDuration() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/getByDuration/{duration}/{filter}",1,"LessThan")
+        MockHttpServletRequestBuilder builder = get("/Tracks/getByDuration/{duration}/{filter}",4,"LessThan")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -206,7 +207,7 @@ public class TrackControllerTest {
 
     @Test
     public void getByYear() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/getByYear/{year}",1981)
+        MockHttpServletRequestBuilder builder = get("/Tracks/getByYear/{year}",2008)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -232,6 +233,7 @@ public class TrackControllerTest {
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
     public void insertTracks() throws Exception {
         Track tracks = new Track(
                 213,
@@ -265,6 +267,7 @@ public class TrackControllerTest {
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
     public void deleteTracks() throws Exception {
         ResultActions actions = mockMvc.perform(delete("/Tracks/{id}", 1000)
                 .accept(MediaType.APPLICATION_JSON)
@@ -305,6 +308,7 @@ public class TrackControllerTest {
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
     public void updateTracks() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Tracks/{id}", 1)
                 .accept(MediaType.APPLICATION_JSON)

@@ -34,11 +34,12 @@ public class JPATrackService implements TrackBaseService {
     }
 
     public Track getById(int id) {
-        Optional<Track> track = trackDAO.findById(id);
-        if (track != null) {
+        if (trackDAO.existsById(id)) {
+            Optional<Track> track = trackDAO.findById(id);
             priceProvider.getTrackPrice(track.get());
+            return track.get();
         }
-        return track.get();
+        return null;
     }
 
     public Track insert(Track Track) {

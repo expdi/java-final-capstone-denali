@@ -8,6 +8,7 @@ import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.MediaType;
 import com.expeditors.musictracking.model.enumerator.Role;
 import com.expeditors.musictracking.provider.PriceProvider;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
@@ -27,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith({MockitoExtension.class, SpringExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest
+@ActiveProfiles({"inmemory"})
 public class TrackTest {
 
     @Mock
@@ -100,13 +103,13 @@ public class TrackTest {
                     "Colorama",
                     new Date("2029/10/02"),
                     new Artist(
-                                    20,
-                                    "Gativideo",
-                                    0,
-                                    new Date("2010/02/23"),
-                                    "Spain",
-                                    Genre.Pop,
-                                    Role.Producer),
+                            20,
+                            "Gativideo",
+                            0,
+                            new Date("2010/02/23"),
+                            "Spain",
+                            Genre.Pop,
+                            Role.Producer),
                     10.40));
 
     @Test
@@ -197,13 +200,16 @@ public class TrackTest {
         Mockito.verify(trackDao).findByTitle("Disco Majul");
     }
 
-    @Test public void getTrackById() {
+    @Test
+    @Transactional
+    public void getTrackById() {
         tracks.forEach(justSpringService::insert);
 
         var track = service.getById(1);
     }
 
     @Test
+    @Transactional
     public void getTracksByArtist() {
         Track track1 = new Track(
                 0,
@@ -232,32 +238,32 @@ public class TrackTest {
                 MediaType.MP3,
                 10.40);
         Track track2 =
-        new Track(
-                0,
-                213,
-                "Memories",
-                "World is fine",
-                List.of( new Artist(
-                                1,
-                                "Michel Jackson",
-                                1.60,
-                                new Date("1950/10/02"),
-                                "Texas",
-                                Genre.Pop,
-                                Role.Singer),
-                        new Artist(
-                                2,
-                                "Cristina Aguilera",
-                                1.89,
-                                new Date("1970/02/02"),
-                                "Arizona",
-                                Genre.Pop,
-                                Role.Singer)),
-                new Date("1950/10/02"),
-                1.20,
-                Genre.Pop,
-                MediaType.MP3,
-                10.40);
+                new Track(
+                        0,
+                        213,
+                        "Memories",
+                        "World is fine",
+                        List.of( new Artist(
+                                        1,
+                                        "Michel Jackson",
+                                        1.60,
+                                        new Date("1950/10/02"),
+                                        "Texas",
+                                        Genre.Pop,
+                                        Role.Singer),
+                                new Artist(
+                                        2,
+                                        "Cristina Aguilera",
+                                        1.89,
+                                        new Date("1970/02/02"),
+                                        "Arizona",
+                                        Genre.Pop,
+                                        Role.Singer)),
+                        new Date("1950/10/02"),
+                        1.20,
+                        Genre.Pop,
+                        MediaType.MP3,
+                        10.40);
 
         tracks.forEach(justSpringService::insert);
 
@@ -268,6 +274,7 @@ public class TrackTest {
     }
 
     @Test
+    @Transactional
     public void getByMediaType() {
         tracks.forEach(justSpringService::insert);
 
@@ -277,8 +284,9 @@ public class TrackTest {
     }
 
     @Test
+    @Transactional
     public void getByDuration() {
-        //tracks.forEach(justSpringService::insert);
+        tracks.forEach(justSpringService::insert);
         assertEquals( 1, justSpringService.getByDuration(1, Filters.LessThan).size());
         assertEquals( 2, justSpringService.getByDuration(0.3, Filters.GreaterThan).size());
         assertEquals( 1, justSpringService.getByDuration(1.20, Filters.Equals).size());
@@ -286,8 +294,9 @@ public class TrackTest {
     }
 
     @Test
+    @Transactional
     public void getByYear() {
-        //tracks.forEach(justSpringService::insert);
+        tracks.forEach(justSpringService::insert);
 
         assertEquals( 1, justSpringService.getByYear(2000).size());
         assertEquals( 0, justSpringService.getByYear(1992).size());

@@ -33,7 +33,10 @@ public class JPAArtistService implements ArtistBaseService {
     }
 
     public Artist getById(int id) {
-        return artistDAO.findById(id).get();
+        if (artistDAO.existsById(id)) {
+            return artistDAO.findById(id).get();
+        }
+        return null;
     }
 
     public Artist insert(Artist artist) {

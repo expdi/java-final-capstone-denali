@@ -4,8 +4,10 @@ import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.Role;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -47,17 +49,29 @@ public class ArtistControllerTest {
 
     @Test
     public void getById() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Artist/{id}", 1)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
 
-        ResultActions actions = mockMvc.perform(builder)
-                .andExpect(status().isOk());
+        ResultActions actions = mockMvc.perform( get("/Artist")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON));
 
         MvcResult result = actions.andReturn();
 
         String jsonResult = result.getResponse().getContentAsString();
         JsonNode node = mapper.readTree(jsonResult);
+        List<Artist> artists = mapper.readValue(node.get("entity").toString(), new TypeReference<List<Artist>>() {});
+        Artist lastArtist = artists.getLast();
+
+        MockHttpServletRequestBuilder builder = get("/Artist/{id}", lastArtist.getArtistId())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        actions = mockMvc.perform(builder)
+                .andExpect(status().isOk());
+
+        result = actions.andReturn();
+
+        jsonResult = result.getResponse().getContentAsString();
+        node = mapper.readTree(jsonResult);
         Artist artist = mapper.treeToValue(node.get("entity"), Artist.class);
 
         assertNotNull(artist);
@@ -72,7 +86,7 @@ public class ArtistControllerTest {
 
     @Test
     public void getByName() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Artist/getByName/{name}", "Michel Jackson")
+        MockHttpServletRequestBuilder builder = get("/Artist/getByName/{name}", "Michael Jackson")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -119,7 +133,7 @@ public class ArtistControllerTest {
         mockMvc.perform(builder)
                 .andExpect(status().isBadRequest());
 
-        builder = get("/Artist/getByRole/{role}","Drummer")
+        builder = get("/Artist/getByRole/{role}","Producer")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -154,7 +168,7 @@ public class ArtistControllerTest {
 
     @Test
     public void getTracksByArtist() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Artist/getTracks/{artist}", "Cristina")
+        MockHttpServletRequestBuilder builder = get("/Artist/getTracks/{artist}", "Michael Jackson")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -179,6 +193,7 @@ public class ArtistControllerTest {
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
     public void insertArtist() throws Exception {
         Artist artist = new Artist(
                 "Michel Jackson",
@@ -205,6 +220,7 @@ public class ArtistControllerTest {
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
     public void deleteArtist() throws Exception {
         ResultActions actions = mockMvc.perform(delete("/Artist/{id}", 1000)
                 .accept(MediaType.APPLICATION_JSON)
@@ -238,6 +254,7 @@ public class ArtistControllerTest {
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
     public void updateArtist() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Artist/{id}", 1)
                 .accept(MediaType.APPLICATION_JSON)
