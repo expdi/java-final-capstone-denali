@@ -2,8 +2,12 @@ package com.expeditors.musictracking.model;
 
 import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.Role;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import org.jetbrains.annotations.NotNull;
@@ -61,12 +65,13 @@ public class Artist {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "rel_track_artist",
             joinColumns = @JoinColumn(name = "artist_id"),
             inverseJoinColumns = @JoinColumn(name = "track_id"))
-    @JdbcTypeCode(SqlTypes.JSON)
+    @Cascade({CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JsonIgnoreProperties("artists")
     List<Track> tracks;
 
 }

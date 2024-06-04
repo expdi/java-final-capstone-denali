@@ -2,12 +2,18 @@ package com.expeditors.musictracking.model;
 
 import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.MediaType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,8 +59,9 @@ public class Track {
 
     private String album;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "tracks")
+    @Cascade({CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
+    @JsonIgnoreProperties("tracks")
     List<Artist> artists;
 
     private Date issueDate;
