@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Profile("jpa")
 @Service
 @Transactional
-@Profile("jpa")
 public class JPAArtistService implements ArtistBaseService {
 
     @Autowired
