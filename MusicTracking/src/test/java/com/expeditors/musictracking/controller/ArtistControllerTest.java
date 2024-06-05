@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@Transactional
 public class ArtistControllerTest {
 
     @Autowired
@@ -36,6 +38,71 @@ public class ArtistControllerTest {
 
     @Autowired
     private ObjectMapper mapper;
+
+    @BeforeEach
+    @Transactional
+    public void getReady() throws Exception {
+        Artist artist = new Artist(
+                "Michael Jackson",
+                1.92,
+                new Date("1968/08/15"),
+                "California",
+                Genre.Pop,
+                Role.Singer);
+
+        String jsonString = mapper.writeValueAsString(artist);
+
+        ResultActions actions = mockMvc.perform(post("/Artist")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonString));
+
+        MvcResult result = actions.andReturn();
+
+        String jsonResult = result.getResponse().getContentAsString();
+        JsonNode node = mapper.readTree(jsonResult);
+        Artist artistPosted = mapper.treeToValue(node.get("entity"), Artist.class);
+
+        Track track = new Track(
+                213,
+                "Disco Majul",
+                "Colorama",
+                new Date("2029/10/02"),
+                new Artist(
+                        20,
+                        "Gativideo",
+                        0,
+                        new Date("2010/02/23"),
+                        "Spain",
+                        Genre.Pop,
+                        Role.Producer),
+                10.40);
+        jsonString = mapper.writeValueAsString(track);
+
+        actions = mockMvc.perform(post("/Tracks")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonString));
+
+        result = actions.andReturn();
+
+        jsonResult = result.getResponse().getContentAsString();
+        node = mapper.readTree(jsonResult);
+        Track trackPosted = mapper.treeToValue(node.get("entity"), Track.class);
+
+        artistPosted.setTracks(List.of(trackPosted));
+
+        String updateEntity = mapper.writeValueAsString(artistPosted);
+
+        actions = mockMvc.perform(put("/Artist")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updateEntity));
+
+        System.out.println(updateEntity);
+        //actions.andExpect(status().isCreated());
+
+    }
 
     @Test
     public void getAllArtists() throws Exception {
@@ -133,7 +200,7 @@ public class ArtistControllerTest {
         mockMvc.perform(builder)
                 .andExpect(status().isBadRequest());
 
-        builder = get("/Artist/getByRole/{role}","Producer")
+        builder = get("/Artist/getByRole/{role}","Pianist")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 

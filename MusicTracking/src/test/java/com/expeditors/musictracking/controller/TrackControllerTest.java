@@ -4,9 +4,11 @@ import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.Role;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@Transactional
 public class TrackControllerTest {
 
     @Autowired
@@ -34,6 +37,69 @@ public class TrackControllerTest {
 
     @Autowired
     private ObjectMapper mapper;
+
+    @BeforeEach
+    @Transactional
+    public void getReady() throws Exception {
+        Artist artist = new Artist(
+                "Michael Jackson",
+                1.92,
+                new Date("1968/08/15"),
+                "California",
+                Genre.Pop,
+                Role.Singer);
+
+        String jsonString = mapper.writeValueAsString(artist);
+
+        ResultActions actions = mockMvc.perform(post("/Artist")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonString));
+
+        MvcResult result = actions.andReturn();
+
+        String jsonResult = result.getResponse().getContentAsString();
+        JsonNode node = mapper.readTree(jsonResult);
+        Artist artistPosted = mapper.treeToValue(node.get("entity"), Artist.class);
+
+        Track track = new Track(
+                213,
+                "Disco Majul",
+                "Colorama",
+                new Date("2008/10/02"),
+                new Artist(
+                        20,
+                        "Gativideo",
+                        0,
+                        new Date("2010/02/23"),
+                        "Spain",
+                        Genre.Pop,
+                        Role.Producer),
+                10.40,
+                com.expeditors.musictracking.model.enumerator.MediaType.MP3);
+        jsonString = mapper.writeValueAsString(track);
+
+        actions = mockMvc.perform(post("/Tracks")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonString));
+
+        result = actions.andReturn();
+
+        jsonResult = result.getResponse().getContentAsString();
+        node = mapper.readTree(jsonResult);
+        Track trackPosted = mapper.treeToValue(node.get("entity"), Track.class);
+
+        artistPosted.setTracks(List.of(trackPosted));
+
+        String updateEntity = mapper.writeValueAsString(artistPosted);
+
+        mockMvc.perform(put("/Artist")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updateEntity));
+
+    }
 
     @Test
     public void getAllTracks() throws Exception {
@@ -47,17 +113,29 @@ public class TrackControllerTest {
 
     @Test
     public void getById() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/{id}", 1)
+        ResultActions actions = mockMvc.perform( get("/Tracks")
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
-
-        ResultActions actions = mockMvc.perform(builder)
-                .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON));
 
         MvcResult result = actions.andReturn();
 
         String jsonResult = result.getResponse().getContentAsString();
         JsonNode node = mapper.readTree(jsonResult);
+        List<Track> tracks = mapper.readValue(node.get("entity").toString(), new TypeReference<List<Track>>() {});
+        Track lastTrack = tracks.getLast();
+
+
+        MockHttpServletRequestBuilder builder = get("/Tracks/{id}", lastTrack.getTrackId())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        actions = mockMvc.perform(builder)
+                .andExpect(status().isOk());
+
+        result = actions.andReturn();
+
+        jsonResult = result.getResponse().getContentAsString();
+        node = mapper.readTree(jsonResult);
         Track track = mapper.treeToValue(node.get("entity"), Track.class);
 
         assertNotNull(track);
@@ -72,20 +150,31 @@ public class TrackControllerTest {
 
     @Test
     public void getByTitle() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/getByTitle/{title}", "Viva La Vida")
+        ResultActions actions = mockMvc.perform( get("/Tracks")
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
-
-        ResultActions actions = mockMvc.perform(builder)
-                .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON));
 
         MvcResult result = actions.andReturn();
 
         String jsonResult = result.getResponse().getContentAsString();
         JsonNode node = mapper.readTree(jsonResult);
-        List<Track> tracks = mapper.treeToValue(node.get("entity"), List.class);
+        List<Track> tracks = mapper.readValue(node.get("entity").toString(), new TypeReference<List<Track>>() {});
+        Track lastTrack = tracks.getLast();
 
-        assertFalse(tracks.isEmpty());
+        MockHttpServletRequestBuilder builder = get("/Tracks/getByTitle/{title}", lastTrack.getTitle())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        actions = mockMvc.perform(builder)
+                .andExpect(status().isOk());
+
+        result = actions.andReturn();
+
+        jsonResult = result.getResponse().getContentAsString();
+        node = mapper.readTree(jsonResult);
+        List<Track> tracksTitles = mapper.treeToValue(node.get("entity"), List.class);
+
+        assertFalse(tracksTitles.isEmpty());
 
         builder = get("/Tracks/getByTitle/{title}", "Magic")
                 .accept(MediaType.APPLICATION_JSON)
@@ -97,20 +186,31 @@ public class TrackControllerTest {
 
     @Test
     public void getByAlbum() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/getByAlbum/{album}", "Stadium Arcadium")
+        ResultActions actions = mockMvc.perform( get("/Tracks")
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
-
-        ResultActions actions = mockMvc.perform(builder)
-                .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON));
 
         MvcResult result = actions.andReturn();
 
         String jsonResult = result.getResponse().getContentAsString();
         JsonNode node = mapper.readTree(jsonResult);
-        List<Track> tracks = mapper.treeToValue(node.get("entity"), List.class);
+        List<Track> tracks = mapper.readValue(node.get("entity").toString(), new TypeReference<List<Track>>() {});
+        Track lastTrack = tracks.getLast();
 
-        assertFalse(tracks.isEmpty());
+        MockHttpServletRequestBuilder builder = get("/Tracks/getByAlbum/{album}", lastTrack.getAlbum())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        actions = mockMvc.perform(builder)
+                .andExpect(status().isOk());
+
+        result = actions.andReturn();
+
+        jsonResult = result.getResponse().getContentAsString();
+        node = mapper.readTree(jsonResult);
+        List<Track> tracksAlbums = mapper.treeToValue(node.get("entity"), List.class);
+
+        assertFalse(tracksAlbums.isEmpty());
 
         builder = get("/Tracks/getByAlbum/{album}", "Magic Magic")
                 .accept(MediaType.APPLICATION_JSON)
@@ -310,16 +410,27 @@ public class TrackControllerTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Transactional
     public void updateTracks() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/{id}", 1)
+        ResultActions actions = mockMvc.perform( get("/Tracks")
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON));
 
-        ResultActions actions = mockMvc.perform(builder)
-                .andExpect(status().isOk());
         MvcResult result = actions.andReturn();
 
         String jsonResult = result.getResponse().getContentAsString();
         JsonNode node = mapper.readTree(jsonResult);
+        List<Track> tracks = mapper.readValue(node.get("entity").toString(), new TypeReference<List<Track>>() {});
+        Track lastTrack = tracks.getLast();
+
+        MockHttpServletRequestBuilder builder = get("/Tracks/{id}", lastTrack.getTrackId())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        actions = mockMvc.perform(builder)
+                .andExpect(status().isOk());
+        result = actions.andReturn();
+
+        jsonResult = result.getResponse().getContentAsString();
+        node = mapper.readTree(jsonResult);
         Track track = mapper.treeToValue(node.get("entity"), Track.class);
         track.setTitle("Wondeful world");
 
@@ -332,7 +443,7 @@ public class TrackControllerTest {
 
         actions.andExpect(status().isOk());
 
-        builder = get("/Tracks/{id}", 1)
+        builder = get("/Tracks/{id}", lastTrack.getTrackId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 

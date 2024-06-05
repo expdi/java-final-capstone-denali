@@ -13,6 +13,7 @@ import org.hibernate.annotations.CascadeType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.print.attribute.standard.Media;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +42,10 @@ public class Track {
 
     public Track(int identifier, String title, String album, Date issueDate, Artist artist, double price) {
         this(0,identifier,title,album,List.of(artist),issueDate,0.0,null,null,price);
+    }
+
+    public Track(int identifier, String title, String album, Date issueDate, Artist artist, double price, MediaType mediaType) {
+        this(0,identifier,title,album,List.of(artist),issueDate,0.0,null,mediaType,price);
     }
 
     @NotNull

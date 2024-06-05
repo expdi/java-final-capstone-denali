@@ -51,7 +51,7 @@ public class TrackTest {
                     "Love",
                     "My Love is the end",
                     List.of( new Artist(
-                                    1,
+                                    45,
                                     "Michel Jackson",
                                     1.60,
                                     new Date("1950/10/02"),
@@ -59,7 +59,7 @@ public class TrackTest {
                                     Genre.Pop,
                                     Role.Singer),
                             new Artist(
-                                    2,
+                                    223,
                                     "Cristina Aguilera",
                                     1.89,
                                     new Date("1970/02/02"),
@@ -77,7 +77,7 @@ public class TrackTest {
                     "Memories",
                     "World is fine",
                     List.of( new Artist(
-                                    1,
+                                    112,
                                     "Michel Jackson",
                                     1.60,
                                     new Date("1950/10/02"),
@@ -85,7 +85,7 @@ public class TrackTest {
                                     Genre.Pop,
                                     Role.Singer),
                             new Artist(
-                                    2,
+                                    245,
                                     "Cristina Aguilera",
                                     1.89,
                                     new Date("1970/02/02"),
