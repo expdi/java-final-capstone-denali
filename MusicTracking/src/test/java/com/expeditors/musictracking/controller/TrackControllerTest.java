@@ -11,12 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@WithMockUser(roles={"USER"})
 public class TrackControllerTest {
 
     @Autowired
@@ -35,6 +38,7 @@ public class TrackControllerTest {
     private ObjectMapper mapper;
 
     @Test
+    @WithMockUser(roles={"USER"})
     public void getAllTracks() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Tracks")
                 .accept(MediaType.APPLICATION_JSON)
@@ -46,6 +50,9 @@ public class TrackControllerTest {
 
     @Test
     public void getById() throws Exception {
+        String authHeader = "Basic " + Base64.getEncoder()
+                .encodeToString("bobby:password".getBytes());
+
         MockHttpServletRequestBuilder builder = get("/Tracks/{id}", 1)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
@@ -120,6 +127,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"USER"})
     public void getByArtist() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Tracks/getByArtist/{artist}", "Michel Jackson")
                 .accept(MediaType.APPLICATION_JSON)
@@ -231,6 +239,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     public void insertTracks() throws Exception {
         Track tracks = new Track(
@@ -264,6 +273,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     public void deleteTracks() throws Exception {
         ResultActions actions = mockMvc.perform(delete("/Tracks/{id}", 1000)
@@ -304,6 +314,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     public void updateTracks() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Tracks/{id}", 1)
