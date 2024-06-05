@@ -16,8 +16,10 @@ import java.util.Date;
 public class Price {
     int id;
     double price;
-    Date priceDate;
+    LocalDate priceDate;
 
-    public Price(int id, LocalDate of) {
+    public Price(int id, LocalDate priceDate) {
+        this.id = id;
+        this.priceDate = priceDate;
     }
 }
