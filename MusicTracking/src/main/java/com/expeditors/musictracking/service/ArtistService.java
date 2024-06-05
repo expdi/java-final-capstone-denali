@@ -8,12 +8,14 @@ import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Profile("inmemory")
 @Service
-public class ArtistService {
+public class ArtistService implements ArtistBaseService{
 
     @Autowired
     private ArtistBaseDAO artistDAO;
@@ -54,6 +56,6 @@ public class ArtistService {
     }
 
     public boolean deleteById(int id) {
-        return artistDAO.delete(id);
+        return artistDAO.deleteById(id);
     }
 }

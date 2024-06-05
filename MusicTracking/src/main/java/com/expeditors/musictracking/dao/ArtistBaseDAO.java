@@ -8,6 +8,7 @@ import com.expeditors.musictracking.model.enumerator.Role;
 import java.util.List;
 
 public interface ArtistBaseDAO extends BaseDAO<Artist> {
+
     List<Artist> findByName(String name);
 
     List<Artist> findByMusicGenre(Genre genre);

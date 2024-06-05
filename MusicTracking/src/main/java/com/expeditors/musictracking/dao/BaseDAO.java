@@ -1,12 +1,16 @@
 package com.expeditors.musictracking.dao;
 
+import org.springframework.context.annotation.Profile;
+
+import java.beans.Transient;
 import java.util.List;
 import java.util.Optional;
 
+@Profile("inmemory")
 public interface BaseDAO<T> {
     T insert(T object);
 
-    boolean delete(int id);
+    boolean deleteById(int id);
 
     boolean update(T object);
 

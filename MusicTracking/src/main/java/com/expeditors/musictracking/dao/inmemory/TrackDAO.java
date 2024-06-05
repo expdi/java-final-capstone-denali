@@ -10,6 +10,7 @@ import com.expeditors.musictracking.model.enumerator.MediaType;
 import com.expeditors.musictracking.model.enumerator.Role;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,17 +19,19 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-@Repository("trackDAO")
+@Repository
+@Profile("inmemory")
 public class TrackDAO implements TrackBaseDAO {
 
     @Autowired
     private ArtistDAO artistDAO;
     private Map<Integer, Track> tracks = new ConcurrentHashMap<>();
     private AtomicInteger nextId = new AtomicInteger(1);
+
     @Override
     public Track insert(Track newTrack) {
-        newTrack.setId(nextId.getAndIncrement());
-        tracks.put(newTrack.getId(),newTrack);
+        newTrack.setTrackId(nextId.getAndIncrement());
+        tracks.put(newTrack.getTrackId(),newTrack);
 
         newTrack.getArtists().forEach(artistDAO::insert);
 
@@ -36,13 +39,13 @@ public class TrackDAO implements TrackBaseDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean deleteById(int id) {
         return tracks.remove(id) != null;
     }
 
     @Override
     public boolean update(Track track) {
-        return tracks.replace(track.getId(), track) != null;
+        return tracks.replace(track.getTrackId(), track) != null;
     }
 
     @Override
@@ -90,7 +93,7 @@ public class TrackDAO implements TrackBaseDAO {
 
     @Override
     public List<Track> findByPrice(@NotNull double price) {
-        return tracks.values().stream().filter(track -> track.getPrice() >= price).toList();
+        return tracks.values().stream().filter(track -> track.getLastPrice() >= price).toList();
     }
 
     @Override

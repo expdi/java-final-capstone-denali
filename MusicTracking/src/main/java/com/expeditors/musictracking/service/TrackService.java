@@ -7,13 +7,15 @@ import com.expeditors.musictracking.model.enumerator.Filters;
 import com.expeditors.musictracking.model.enumerator.MediaType;
 import com.expeditors.musictracking.provider.PriceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TrackService {
+@Profile("inmemory")
+public class TrackService implements TrackBaseService {
 
     @Autowired
     private TrackBaseDAO trackDAO;
@@ -66,7 +68,7 @@ public class TrackService {
     }
 
     public boolean deleteById(int id) {
-        return trackDAO.delete(id);
+        return trackDAO.deleteById(id);
     }
 
     public List<Track> setTrackPrice(List<Track> tracks) {
