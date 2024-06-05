@@ -37,7 +37,7 @@ public class JPAArtistServiceTest {
     @Autowired
     private JPATrackService trackService;
 
-    @BeforeEach
+//    @BeforeEach
     @Transactional
     public void getReady() throws Exception {
 

@@ -50,15 +50,16 @@ public class JPATrackService implements TrackBaseService {
 
     public Track insert(Track track) {
         Track savedTrack = trackDAO.save(track);
-        savedTrack.getArtists().forEach(artist -> {
-            Artist findedArtist = artistDAO.findById(artist.getArtistId()).get();
-            if(findedArtist.getTracks() == null) {
-                findedArtist.setTracks(new ArrayList<>());
-            }
-            findedArtist.getTracks().add(track);
-            artistDAO.save(findedArtist);
-        });
-        return trackDAO.save(savedTrack);
+        return savedTrack;
+//        savedTrack.getArtists().forEach(artist -> {
+//            Artist findedArtist = artistDAO.findById(artist.getArtistId()).get();
+//            if(findedArtist.getTracks() == null) {
+//                findedArtist.setTracks(new ArrayList<>());
+//            }
+//            findedArtist.getTracks().add(track);
+//            artistDAO.save(findedArtist);
+//        });
+//        return trackDAO.save(savedTrack);
     }
 
     public List<Track> getByTitle(String title) {

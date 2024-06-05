@@ -60,7 +60,11 @@ public class Track {
 
     private String album;
 
-    @ManyToMany(mappedBy = "tracks")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+          name = "rel_track_artist",
+          joinColumns = @JoinColumn(name = "track_id"),
+          inverseJoinColumns = @JoinColumn(name = "artist_id"))
     @Cascade({CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
     @JsonIgnoreProperties("tracks")
     List<Artist> artists;

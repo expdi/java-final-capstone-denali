@@ -65,11 +65,11 @@ public class Artist {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany()
-    @JoinTable(
-            name = "rel_track_artist",
-            joinColumns = @JoinColumn(name = "artist_id"),
-            inverseJoinColumns = @JoinColumn(name = "track_id"))
+    @ManyToMany(mappedBy = "artists")
+//    @JoinTable(
+//            name = "rel_track_artist",
+//            joinColumns = @JoinColumn(name = "artist_id"),
+//            inverseJoinColumns = @JoinColumn(name = "track_id"))
     @Cascade({CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JsonIgnoreProperties("artists")
     List<Track> tracks;
