@@ -24,13 +24,20 @@ public class MusicPriceController {
         return service.getTrackPrice(id);
     }
 
+    @GetMapping("/PriceLimit")
+    public ResponseEntity<CustomResponse<PriceLimit>> getLimits(){
+        return ResponseEntity.ok(CustomResponse.ofValue(service.getPriceLimit()));
 
-    @PutMapping("/priceLimit")
+    }
+
+    @PutMapping("/PriceLimit")
     public ResponseEntity<?> updateEntity(@RequestBody PriceLimit priceLimit) {
         boolean result = service.update(priceLimit);
 
         return ResponseEntity.ok(CustomResponse.ofValue(result));
     }
+
+
 
 
 }
