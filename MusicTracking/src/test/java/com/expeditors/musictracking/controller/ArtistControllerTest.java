@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,7 +46,6 @@ public class ArtistControllerTest {
 
     @BeforeEach
     @Transactional
-    @WithMockUser (roles={"ADMIN", "USER"})
     public void getReady() throws Exception {
         Artist artist = new Artist(
                 "Michael Jackson",
@@ -57,7 +57,7 @@ public class ArtistControllerTest {
 
         String jsonString = mapper.writeValueAsString(artist);
 
-        ResultActions actions = mockMvc.perform(post("/Artist")
+        ResultActions actions = mockMvc.perform(post("/Artist").with(httpBasic("Raul","password"))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonString));
@@ -84,7 +84,7 @@ public class ArtistControllerTest {
                 10.40);
         jsonString = mapper.writeValueAsString(track);
 
-        actions = mockMvc.perform(post("/Tracks")
+        actions = mockMvc.perform(post("/Tracks").with(httpBasic("Raul","password"))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonString));

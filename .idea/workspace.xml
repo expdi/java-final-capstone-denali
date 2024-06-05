@@ -50,67 +50,67 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.ArtistControllerTest.executor": "Run",
-    "JUnit.ArtistControllerTest.getAllArtists.executor": "Debug",
-    "JUnit.ArtistControllerTest.getById.executor": "Run",
-    "JUnit.ArtistControllerTest.getByName.executor": "Run",
-    "JUnit.ArtistControllerTest.getByRole.executor": "Run",
-    "JUnit.ArtistControllerTest.getTracksByArtist.executor": "Run",
-    "JUnit.ArtistTest.executor": "Run",
-    "JUnit.JPAArtistServiceTest.executor": "Run",
-    "JUnit.JPAArtistServiceTest.serviceDelete.executor": "Run",
-    "JUnit.JPAArtistServiceTest.serviceSearch.executor": "Run",
-    "JUnit.JPAArtistServiceTest.serviceUpdate.executor": "Run",
-    "JUnit.JPATrackServiceTest.executor": "Run",
-    "JUnit.JPATrackServiceTest.getByDuration.executor": "Run",
-    "JUnit.JPATrackServiceTest.getTrackById.executor": "Run",
-    "JUnit.JPATrackServiceTest.getTracksByArtist.executor": "Run",
-    "JUnit.JPATrackServiceTest.serviceInsert.executor": "Run",
-    "JUnit.TrackControllerTest.executor": "Run",
-    "JUnit.TrackControllerTest.getAllTracks.executor": "Debug",
-    "JUnit.TrackControllerTest.getByAlbum.executor": "Run",
-    "JUnit.TrackControllerTest.getByArtist.executor": "Run",
-    "JUnit.TrackControllerTest.getByDuration.executor": "Run",
-    "JUnit.TrackControllerTest.getById.executor": "Run",
-    "JUnit.TrackControllerTest.getByTitle.executor": "Run",
-    "JUnit.TrackControllerTest.getByYear.executor": "Run",
-    "JUnit.TrackControllerTest.getReady.executor": "Debug",
-    "JUnit.TrackControllerTest.updateTracks.executor": "Run",
-    "JUnit.TrackTest.executor": "Run",
-    "JUnit.TrackTest.getByDuration.executor": "Run",
-    "JUnit.TrackTest.getByYear.executor": "Run",
-    "JUnit.TrackTest.getTrackById.executor": "Run",
-    "JUnit.controller in MusicTracking.executor": "Run",
-    "JUnit.java in MusicTracking.executor": "Coverage",
-    "JUnit.musictracking in MusicTracking.executor": "Run",
-    "JUnit.service in MusicTracking.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.MusicTrackingApplication.executor": "Run",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "jpa__transformation",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Proyectos/JAVA/java-final-capstone-denali/MusicTracking/src/main/java/com/expeditors/musictracking",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "inlay.hints",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.ArtistControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArtistControllerTest.getAllArtists.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ArtistControllerTest.getById.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArtistControllerTest.getByName.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArtistControllerTest.getByRole.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArtistControllerTest.getTracksByArtist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArtistTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JPAArtistServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JPAArtistServiceTest.serviceDelete.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JPAArtistServiceTest.serviceSearch.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JPAArtistServiceTest.serviceUpdate.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JPATrackServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JPATrackServiceTest.getByDuration.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JPATrackServiceTest.getTrackById.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JPATrackServiceTest.getTracksByArtist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JPATrackServiceTest.serviceInsert.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackControllerTest.getAllTracks.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.TrackControllerTest.getByAlbum.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackControllerTest.getByArtist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackControllerTest.getByDuration.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackControllerTest.getById.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackControllerTest.getByTitle.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackControllerTest.getByYear.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackControllerTest.getReady.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.TrackControllerTest.updateTracks.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackTest.getByDuration.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackTest.getByYear.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrackTest.getTrackById.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.controller in MusicTracking.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.java in MusicTracking.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.musictracking in MusicTracking.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.service in MusicTracking.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.MusicTrackingApplication.executor&quot;: &quot;Run&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;jpa__transformation&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Proyectos/JAVA/java-final-capstone-denali/MusicTracking/src/main/java/com/expeditors/musictracking&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Proyectos\JAVA\java-final-capstone-denali\MusicTracking\src\main\java\com\expeditors\musictracking" />
@@ -123,7 +123,7 @@
       <recent name="com.expeditors.musictracking.service.jpa" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TrackControllerTest">
+  <component name="RunManager" selected="JUnit.musictracking in MusicTracking">
     <configuration name="ArtistTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MusicTracking" />
       <extension name="coverage">
@@ -186,18 +186,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TrackControllerTest.getByArtist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="musictracking in MusicTracking" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MusicTracking" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.expeditors.musictracking.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.expeditors.musictracking.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.expeditors.musictracking.controller.TrackControllerTest" />
-      <option name="METHOD_NAME" value="getByArtist" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -220,11 +212,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.musictracking in MusicTracking" />
         <item itemvalue="JUnit.TrackControllerTest" />
         <item itemvalue="JUnit.ArtistTest" />
         <item itemvalue="JUnit.JPATrackServiceTest" />
         <item itemvalue="JUnit.TrackControllerTest.getAllTracks" />
-        <item itemvalue="JUnit.TrackControllerTest.getByArtist" />
       </list>
     </recent_temporary>
   </component>

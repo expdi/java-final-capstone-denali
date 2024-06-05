@@ -23,7 +23,7 @@ public class SecurityConfigAllElse {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails bobby = User.withUsername("Raul")
-                .password("{bcrypt}$2y$10$eH/LSRXeEZAvmtd.NWH6l.rT8FM16TKK7dcoD4WWB2BKWl3Ah4VMK")
+                .password("{bcrypt}$2a$10$bc6CdSJmg5HHPdpsjrsc1OOpjpjHAXhOVcyvtfVXnIxaqlTDcpuzq")
                 .roles("USER", "ADMIN")
                 .build();
 
