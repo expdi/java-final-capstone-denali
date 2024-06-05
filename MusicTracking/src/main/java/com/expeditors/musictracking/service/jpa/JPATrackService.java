@@ -1,7 +1,9 @@
 package com.expeditors.musictracking.service.jpa;
 
 import com.expeditors.musictracking.dao.TrackBaseDAO;
+import com.expeditors.musictracking.dao.jpa.JPAArtistDAO;
 import com.expeditors.musictracking.dao.jpa.JPATrackDAO;
+import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Filters;
 import com.expeditors.musictracking.model.enumerator.MediaType;
@@ -13,6 +15,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +28,9 @@ public class JPATrackService implements TrackBaseService {
 
     @Autowired
     private JPATrackDAO trackDAO;
+
+    @Autowired
+    private JPAArtistDAO artistDAO;
 
     @Autowired
     private PriceProvider priceProvider;
@@ -42,8 +48,17 @@ public class JPATrackService implements TrackBaseService {
         return null;
     }
 
-    public Track insert(Track Track) {
-        return trackDAO.save(Track);
+    public Track insert(Track track) {
+        Track savedTrack = trackDAO.save(track);
+        savedTrack.getArtists().forEach(artist -> {
+            Artist findedArtist = artistDAO.findById(artist.getArtistId()).get();
+            if(findedArtist.getTracks() == null) {
+                findedArtist.setTracks(new ArrayList<>());
+            }
+            findedArtist.getTracks().add(track);
+            artistDAO.save(findedArtist);
+        });
+        return trackDAO.save(savedTrack);
     }
 
     public List<Track> getByTitle(String title) {

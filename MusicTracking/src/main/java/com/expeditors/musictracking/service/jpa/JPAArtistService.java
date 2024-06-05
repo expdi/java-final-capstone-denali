@@ -15,7 +15,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Profile("jpa")
 @Service
@@ -64,7 +67,39 @@ public class JPAArtistService implements ArtistBaseService {
             if(!artistDAO.existsById(artist.getArtistId())) {
                 return false;
             }
-            artistDAO.save(artist);
+
+            Artist updatedArtist = artistDAO.findById(artist.getArtistId()).orElse(null);
+            List<Track> tracks = new ArrayList<>();
+            artist.getTracks().forEach(track -> {
+                Track findedTrack = trackDao.findById(track.getTrackId()).orElse(null);
+                if(findedTrack == null) {
+                    tracks.add(track);
+                } else {
+                    Optional<Track> trackItem = updatedArtist.getTracks().stream().filter(track1 -> track1.getTrackId() == track.getTrackId()).findFirst();
+                    if (trackItem.isPresent()) {
+                        trackItem.get().setAlbum(track.getAlbum());
+                        trackItem.get().setGenre(track.getGenre());
+                        trackItem.get().setTitle(track.getTitle());
+                        trackItem.get().setDuration(track.getDuration());
+                        trackItem.get().setIssueDate(track.getIssueDate());
+                        trackItem.get().setMediaType(track.getMediaType());
+                        trackItem.get().setTrackIdentifier(track.getTrackIdentifier());
+                    } else {
+                        tracks.add(findedTrack);
+                    }
+                }
+            });
+
+            updatedArtist.setName(artist.getName());
+            updatedArtist.setHeight(artist.getHeight());
+            updatedArtist.setCountry(artist.getCountry());
+            updatedArtist.setBirthday(artist.getBirthday());
+            updatedArtist.setMusicGenre(artist.getMusicGenre());
+            updatedArtist.setRole(artist.getRole());
+
+            updatedArtist.getTracks().addAll(tracks);
+
+            artistDAO.save(updatedArtist);
         }
         catch(Exception ex) {
             return false;
