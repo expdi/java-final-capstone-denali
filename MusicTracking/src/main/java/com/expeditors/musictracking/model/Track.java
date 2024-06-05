@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.print.attribute.standard.Media;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -32,19 +33,19 @@ public class Track {
         this(0,identifier,title,null,null,null,0.0,null,null,price);
     }
 
-    public Track(String title, String album, Date issueDate) {
+    public Track(String title, String album, LocalDate issueDate) {
         this(0,0,title,album,null,issueDate,0.0,null,null,0.0);
     }
 
-    public Track(int identifier, String title, String album, Date issueDate, Artist artist) {
+    public Track(int identifier, String title, String album, LocalDate issueDate, Artist artist) {
         this(0,identifier,title,album,List.of(artist),issueDate,0.0,null,null,0.0);
     }
 
-    public Track(int identifier, String title, String album, Date issueDate, Artist artist, double price) {
+    public Track(int identifier, String title, String album, LocalDate issueDate, Artist artist, double price) {
         this(0,identifier,title,album,List.of(artist),issueDate,0.0,null,null,price);
     }
 
-    public Track(int identifier, String title, String album, Date issueDate, Artist artist, double price, MediaType mediaType) {
+    public Track(int identifier, String title, String album, LocalDate issueDate, Artist artist, double price, MediaType mediaType) {
         this(0,identifier,title,album,List.of(artist),issueDate,0.0,null,mediaType,price);
     }
 
@@ -60,12 +61,16 @@ public class Track {
 
     private String album;
 
-    @ManyToMany(mappedBy = "tracks")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "rel_track_artist",
+            joinColumns = @JoinColumn(name = "track_id"),
+            inverseJoinColumns = @JoinColumn(name = "artist_id"))
     @Cascade({CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
     @JsonIgnoreProperties("tracks")
     List<Artist> artists;
 
-    private Date issueDate;
+    private LocalDate issueDate;
 
     @Nullable
     private Double duration;

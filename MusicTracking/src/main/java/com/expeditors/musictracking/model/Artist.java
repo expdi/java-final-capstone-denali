@@ -13,6 +13,7 @@ import org.hibernate.type.SqlTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Artist {
         this(name,null,null);
     }
 
-    public Artist(String name, Date birthday) {
+    public Artist(String name, LocalDate birthday) {
         this(0,name,0.0,birthday,null,null,null,null);
     }
 
@@ -36,11 +37,11 @@ public class Artist {
         this(0,name,0.0,null,null,genre,role,null);
     }
 
-    public Artist(String name, double height, Date birthday, String country, Genre genre, Role role) {
+    public Artist(String name, double height, LocalDate birthday, String country, Genre genre, Role role) {
         this(0,name,height,birthday,country,genre,role,null);
     }
 
-    public Artist(int id,String name, double height, Date birthday, String country, Genre genre, Role role) {
+    public Artist(int id,String name, double height, LocalDate birthday, String country, Genre genre, Role role) {
         this(0,name,height,birthday,country,genre,role,null);
     }
 
@@ -55,7 +56,7 @@ public class Artist {
     @Nullable
     private Double height;
 
-    private Date birthday;
+    private LocalDate birthday;
 
     private String country;
 
@@ -65,11 +66,7 @@ public class Artist {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany()
-    @JoinTable(
-            name = "rel_track_artist",
-            joinColumns = @JoinColumn(name = "artist_id"),
-            inverseJoinColumns = @JoinColumn(name = "track_id"))
+    @ManyToMany(mappedBy = "artists")
     @Cascade({CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JsonIgnoreProperties("artists")
     List<Track> tracks;

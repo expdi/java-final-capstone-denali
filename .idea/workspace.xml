@@ -5,25 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4fb2f48-9868-4830-b9f5-20821c26ca31" name="Changes" comment="# Titulo no debe ser mayor a 50 caracteres, capitalizado y si es posible&#10;# en modo imperativo (Como si fuera una orden).&#10;#&#10;# (Salto de linea)&#10;&#10;# Numero de Tarea, Proyecto o Incident (Comentar o descomentar)&#10;# Tarea:&#10;# Proyecto:&#10;# Incident:&#10;# (Salto de linea)&#10;&#10;# Cuerpo/Descripcion (No mas de 72 caracteres por linea)&#10;#&#10;# (Salto de linea)&#10;&#10;# Seccion opcional, y agregar las notas necesarias&#10;# Notas:&#10;#&#10;# (Salto de linea)&#10;&#10;# Seccion opcional, descomentar para usar&#10;# Referencias:&#10;#">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MusicPriceTracker/src/main/java/com/expeditors/musicpricetracker/controller/jconfig/AccessExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MusicPriceTracker/src/main/java/com/expeditors/musicpricetracker/controller/jconfig/AuthExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MusicPriceTracker/src/main/java/com/expeditors/musicpricetracker/controller/jconfig/SecurityConfigAllElse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MusicPriceTracker/src/main/java/com/expeditors/musicpricetracker/controller/jconfig/SecurityConfigRest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/controller/jconfig/AccessExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/controller/jconfig/AuthExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/controller/jconfig/SecurityConfigAllElse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/controller/jconfig/SecurityConfigRest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicPriceTracker/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/MusicPriceTracker/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicTracking/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/service/jpa/JPATrackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/service/jpa/JPATrackService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/resources/application-postgres.properties" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/resources/application-postgres.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/dao/inmemory/TrackDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/dao/inmemory/TrackDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/model/Artist.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/model/Artist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/model/Track.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/model/Track.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/ArtistControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/ArtistControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/TrackControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/TrackControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/ArtistTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/ArtistTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/TrackTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/TrackTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/jpa/JPAArtistServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/jpa/JPAArtistServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/jpa/JPATrackServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/jpa/JPATrackServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +94,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.MusicTrackingApplication.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging jpa__transformation",
+    "git-widget-placeholder": "jpa__transformation",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Proyectos/JAVA/java-final-capstone-denali/MusicTracking/src/main/java/com/expeditors/musictracking",
     "node.js.detected.package.eslint": "true",
@@ -132,7 +123,37 @@
       <recent name="com.expeditors.musictracking.service.jpa" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TrackControllerTest.getAllTracks">
+  <component name="RunManager" selected="JUnit.TrackControllerTest">
+    <configuration name="ArtistTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MusicTracking" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.expeditors.musictracking.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.expeditors.musictracking.service" />
+      <option name="MAIN_CLASS_NAME" value="com.expeditors.musictracking.service.ArtistTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JPATrackServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MusicTracking" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.expeditors.musictracking.service.jpa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.expeditors.musictracking.service.jpa" />
+      <option name="MAIN_CLASS_NAME" value="com.expeditors.musictracking.service.jpa.JPATrackServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TrackControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MusicTracking" />
       <extension name="coverage">
@@ -181,30 +202,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TrackControllerTest.getReady" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MusicTracking" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.expeditors.musictracking.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.expeditors.musictracking.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.expeditors.musictracking.controller.TrackControllerTest" />
-      <option name="METHOD_NAME" value="getReady" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="controller in MusicTracking" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MusicTracking" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="MusicPriceTrackerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="MusicPriceTracker" />
@@ -223,11 +220,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TrackControllerTest.getAllTracks" />
         <item itemvalue="JUnit.TrackControllerTest" />
+        <item itemvalue="JUnit.ArtistTest" />
+        <item itemvalue="JUnit.JPATrackServiceTest" />
+        <item itemvalue="JUnit.TrackControllerTest.getAllTracks" />
         <item itemvalue="JUnit.TrackControllerTest.getByArtist" />
-        <item itemvalue="JUnit.TrackControllerTest.getReady" />
-        <item itemvalue="JUnit.controller in MusicTracking" />
       </list>
     </recent_temporary>
   </component>
@@ -277,17 +274,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/TrackTest.java</url>
-          <line>295</line>
+          <line>297</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/jpa/JPATrackServiceTest.java</url>
-          <line>255</line>
+          <line>258</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/jpa/JPAArtistServiceTest.java</url>
-          <line>169</line>
+          <line>171</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -312,17 +309,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/TrackControllerTest.java</url>
-          <line>51</line>
+          <line>53</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/TrackControllerTest.java</url>
-          <line>94</line>
+          <line>96</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/TrackControllerTest.java</url>
-          <line>233</line>
+          <line>235</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>

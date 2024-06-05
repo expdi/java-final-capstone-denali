@@ -23,6 +23,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.client.RestClient;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +54,7 @@ public class TrackControllerTest {
         Artist artist = new Artist(
                 "Michael Jackson",
                 1.92,
-                new Date("1968/08/15"),
+                LocalDate.parse("1968/08/15", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                 "California",
                 Genre.Pop,
                 Role.Singer);
@@ -74,12 +76,12 @@ public class TrackControllerTest {
                 213,
                 "Disco Majul",
                 "Colorama",
-                new Date("2008/10/02"),
+                LocalDate.parse("2008/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                 new Artist(
                         20,
                         "Gativideo",
                         0,
-                        new Date("2010/02/23"),
+                        LocalDate.parse("2010/02/23", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                         "Spain",
                         Genre.Pop,
                         Role.Producer),
@@ -353,12 +355,12 @@ public class TrackControllerTest {
                 213,
                 "Disco Majul",
                 "Colorama",
-                new Date("2029/10/02"),
+                LocalDate.parse("2029/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                 new Artist(
                         20,
                         "Gativideo",
                         0,
-                        new Date("2010/02/23"),
+                        LocalDate.parse("2010/02/23", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                         "Spain",
                         Genre.Pop,
                         Role.Producer),
@@ -394,12 +396,12 @@ public class TrackControllerTest {
                 213,
                 "Disco Majul",
                 "Colorama",
-                new Date("2029/10/02"),
+                LocalDate.parse("2029/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                 new Artist(
                         20,
                         "Gativideo",
                         0,
-                        new Date("2010/02/23"),
+                        LocalDate.parse("2010/02/23", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                         "Spain",
                         Genre.Pop,
                         Role.Producer),

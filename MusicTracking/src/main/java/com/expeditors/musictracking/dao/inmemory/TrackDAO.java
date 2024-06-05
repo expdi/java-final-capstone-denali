@@ -105,8 +105,7 @@ public class TrackDAO implements TrackBaseDAO {
     public List<Track> findByYear(@NotNull int year) {
         Calendar calendar = Calendar.getInstance();
         return tracks.values().stream().filter(track -> {
-           calendar.setTime(track.getIssueDate());
-           return calendar.get(Calendar.YEAR) == year;
+           return track.getIssueDate().getYear() == year;
         }).toList();
     }
 }

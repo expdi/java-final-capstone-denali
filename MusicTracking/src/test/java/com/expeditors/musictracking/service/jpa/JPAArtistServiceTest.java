@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class JPAArtistServiceTest {
                         3,
                         "Michel Jackson",
                         1.60,
-                        new Date("1950/10/02"),
+                        LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                         "Texas",
                         Genre.Pop,
                         Role.Singer),
@@ -54,7 +56,7 @@ public class JPAArtistServiceTest {
                         34,
                         "Cristina Aguilera",
                         1.89,
-                        new Date("1970/02/02"),
+                        LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                         "Arizona",
                         Genre.Pop,
                         Role.Singer));
@@ -69,7 +71,7 @@ public class JPAArtistServiceTest {
                                         1,
                                         "Michel Jackson",
                                         1.60,
-                                        new Date("1950/10/02"),
+                                        LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                         "Texas",
                                         Genre.Pop,
                                         Role.Singer),
@@ -77,11 +79,11 @@ public class JPAArtistServiceTest {
                                         2,
                                         "Cristina Aguilera",
                                         1.89,
-                                        new Date("1970/02/02"),
+                                        LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                         "Arizona",
                                         Genre.Pop,
                                         Role.Singer)),
-                        new Date("2000/10/02"),
+                        LocalDate.parse("2000/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                         3.45,
                         Genre.Pop,
                         MediaType.MP3,
@@ -95,7 +97,7 @@ public class JPAArtistServiceTest {
                                         33,
                                         "Michel Jackson",
                                         1.60,
-                                        new Date("1950/10/02"),
+                                        LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                         "Texas",
                                         Genre.Pop,
                                         Role.Singer),
@@ -103,11 +105,11 @@ public class JPAArtistServiceTest {
                                         24,
                                         "Cristina Aguilera",
                                         1.89,
-                                        new Date("1970/02/02"),
+                                        LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                         "Arizona",
                                         Genre.Pop,
                                         Role.Singer)),
-                        new Date("1981/10/02"),
+                        LocalDate.parse("1981/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                         1.20,
                         Genre.Pop,
                         MediaType.Ogg,
@@ -116,12 +118,12 @@ public class JPAArtistServiceTest {
                         213,
                         "Disco Majul",
                         "Colorama",
-                        new Date("2029/10/02"),
+                        LocalDate.parse("2029/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                         new Artist(
                                 20,
                                 "Gativideo",
                                 0,
-                                new Date("2010/02/23"),
+                                LocalDate.parse("2010/02/23", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                 "Spain",
                                 Genre.Pop,
                                 Role.Producer),
@@ -139,7 +141,7 @@ public class JPAArtistServiceTest {
                 20,
                 "Gativideo",
                 0,
-                new Date("2010/02/23"),
+                LocalDate.parse("2010/02/23", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                 "Spain",
                 Genre.Pop,
                 Role.Producer);
