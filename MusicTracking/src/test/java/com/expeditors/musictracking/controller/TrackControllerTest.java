@@ -27,7 +27,9 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.StringTemplate.STR;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,10 +46,8 @@ public class TrackControllerTest {
     private ObjectMapper mapper;
 
 
-    @Test
     @BeforeEach
     @Transactional
-    @WithMockUser (roles={"ADMIN"})
     public void getReady() throws Exception {
         Artist artist = new Artist(
                 "Michael Jackson",
@@ -59,7 +59,8 @@ public class TrackControllerTest {
 
         String jsonString = mapper.writeValueAsString(artist);
 
-        ResultActions actions = mockMvc.perform(post("/Artist")
+
+        ResultActions actions = mockMvc.perform(post("/Artist").with(httpBasic("Raul","password"))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonString));
@@ -87,7 +88,7 @@ public class TrackControllerTest {
                 com.expeditors.musictracking.model.enumerator.MediaType.MP3);
         jsonString = mapper.writeValueAsString(track);
 
-        actions = mockMvc.perform(post("/Tracks")
+        actions = mockMvc.perform(post("/Tracks").with(httpBasic("Raul","password"))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonString));
@@ -232,7 +233,6 @@ public class TrackControllerTest {
     }
 
     @Test
-    @WithMockUser (roles={"ADMIN"})
     public void getByArtist() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Tracks/getByArtist/{artist}", "Michael Jackson")
                 .accept(MediaType.APPLICATION_JSON)
@@ -259,7 +259,6 @@ public class TrackControllerTest {
     }
 
     @Test
-    @WithMockUser (roles={"ADMIN"})
     public void getByMediaType() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Tracks/getByMediaType/{mediaType}", "MP3")
                 .accept(MediaType.APPLICATION_JSON)
