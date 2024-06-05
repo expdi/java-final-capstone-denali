@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -30,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@WithMockUser (roles={"USER"})
 @Transactional
 public class ArtistControllerTest {
 
@@ -41,6 +43,7 @@ public class ArtistControllerTest {
 
     @BeforeEach
     @Transactional
+    @WithMockUser (roles={"ADMIN", "USER"})
     public void getReady() throws Exception {
         Artist artist = new Artist(
                 "Michael Jackson",
@@ -105,7 +108,9 @@ public class ArtistControllerTest {
     }
 
     @Test
-    public void getAllArtists() throws Exception {
+    @WithMockUser (roles={"USER"})
+    public void getAllArtistsWithValidUser() throws Exception {
+
         MockHttpServletRequestBuilder builder = get("/Artist")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
@@ -261,6 +266,7 @@ public class ArtistControllerTest {
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Transactional
+    @WithMockUser (roles={"ADMIN"})
     public void insertArtist() throws Exception {
         Artist artist = new Artist(
                 "Michel Jackson",
@@ -286,6 +292,29 @@ public class ArtistControllerTest {
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
+    public void insertArtistNotAuthorized() throws Exception {
+        Artist artist = new Artist(
+                "Michel Jackson",
+                1.92,
+                new Date("1968/08/15"),
+                "California",
+                Genre.Pop,
+                Role.Singer);
+
+        String jsonString = mapper.writeValueAsString(artist);
+
+        ResultActions actions = mockMvc.perform(post("/Artist")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonString));
+
+        actions.andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    @WithMockUser (roles={"ADMIN"})
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Transactional
     public void deleteArtist() throws Exception {
@@ -320,6 +349,7 @@ public class ArtistControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Transactional
     public void updateArtist() throws Exception {

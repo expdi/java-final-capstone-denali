@@ -7,6 +7,7 @@ import com.expeditors.musictracking.model.enumerator.Role;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,12 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.web.client.RestClient;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @Transactional
+@WithMockUser(roles={"USER"})
 public class TrackControllerTest {
 
     @Autowired
@@ -38,8 +43,11 @@ public class TrackControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
+
+    @Test
     @BeforeEach
     @Transactional
+    @WithMockUser (roles={"ADMIN"})
     public void getReady() throws Exception {
         Artist artist = new Artist(
                 "Michael Jackson",
@@ -113,7 +121,10 @@ public class TrackControllerTest {
 
     @Test
     public void getById() throws Exception {
-        ResultActions actions = mockMvc.perform( get("/Tracks")
+        String authHeader = "Basic " + Base64.getEncoder()
+                .encodeToString("bobby:password".getBytes());
+
+         ResultActions actions = mockMvc.perform( get("/Tracks")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON));
 
@@ -221,6 +232,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     public void getByArtist() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Tracks/getByArtist/{artist}", "Michael Jackson")
                 .accept(MediaType.APPLICATION_JSON)
@@ -247,6 +259,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     public void getByMediaType() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Tracks/getByMediaType/{mediaType}", "MP3")
                 .accept(MediaType.APPLICATION_JSON)
@@ -332,6 +345,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Transactional
     public void insertTracks() throws Exception {
@@ -366,6 +380,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Transactional
     public void deleteTracks() throws Exception {
@@ -407,6 +422,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Transactional
     public void updateTracks() throws Exception {
