@@ -16,7 +16,7 @@ public class PriceProvider {
 
 
     public PriceProvider() {
-        var baseUrl = "http://localhost:8181";
+        var baseUrl = "http://localhost:8082";
         var rootUrl = "/MusicTrackPrice";
         priceUrl = rootUrl + "/{id}";
 
