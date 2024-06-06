@@ -14,12 +14,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Price {
-    int id;
     double price;
     LocalDate priceDate;
-
-    public Price(int id, LocalDate priceDate) {
-        this.id = id;
-        this.priceDate = priceDate;
-    }
 }

@@ -11,4 +11,5 @@ import lombok.Setter;
 public class PriceLimit {
     private double maximumPrice;
     private double minimumPrice;
+
 }

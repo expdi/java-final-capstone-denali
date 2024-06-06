@@ -18,14 +18,33 @@ public class MusicPriceService {
 
     private double maximumPrice = 120;
     private double minimunPrice = 60;
+
     public PriceLimit getPriceLimit(){
         return new PriceLimit(maximumPrice,minimunPrice);
     }
-    public boolean update(PriceLimit priceLimit){
-        this.maximumPrice = priceLimit.getMaximumPrice();
-        this.minimunPrice = priceLimit.getMinimumPrice();
-        return true;
+    public boolean isPriceValid(PriceLimit pricelimit){
+
+        Boolean maxPriceFilled = pricelimit.getMaximumPrice() != 0;
+        Boolean minPriceFilled = pricelimit.getMinimumPrice() != 0;
+
+        if (!maxPriceFilled){pricelimit.setMaximumPrice(maximumPrice);}
+        if (!minPriceFilled){pricelimit.setMinimumPrice(minimunPrice);}
+
+        Boolean priceIsValid = pricelimit.getMaximumPrice() > pricelimit.getMinimumPrice();
+
+
+        return priceIsValid;
     }
+
+    public boolean update(PriceLimit priceLimit){
+        if (this.isPriceValid(priceLimit)) {
+            this.maximumPrice = priceLimit.getMaximumPrice();
+            this.minimunPrice = priceLimit.getMinimumPrice();
+            return true;
+        }
+        return false;
+    }
+
 
     public double generatePrice(){
         NumberFormat nf = NumberFormat.getNumberInstance();
@@ -33,12 +52,11 @@ public class MusicPriceService {
         nf.setRoundingMode(RoundingMode.DOWN);
         return  Double.parseDouble(nf.format(ThreadLocalRandom.current().nextDouble(this.minimunPrice, this.maximumPrice)));
     }
-    public Optional<Price> getTrackPrice(int id) {
+    public Optional<Price> getTrackPrice(int durationSeconds) {
 
 
         Price price = new Price(
-                id,
-                LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth())
+                durationSeconds, LocalDate.now()
         );
 
         price.setPrice(generatePrice());
