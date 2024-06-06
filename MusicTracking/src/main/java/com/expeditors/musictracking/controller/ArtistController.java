@@ -5,6 +5,7 @@ import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.Role;
+import com.expeditors.musictracking.service.ArtistBaseService;
 import com.expeditors.musictracking.service.ArtistService;
 import com.expeditors.musictracking.service.TrackService;
 import com.expeditors.musictracking.utils.UriCreator;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequestMapping("/Artist")
 public class ArtistController {
     @Autowired
-    private ArtistService service;
+    private ArtistBaseService service;
 
     @Autowired
     private UriCreator uriCreator;
@@ -90,7 +91,7 @@ public class ArtistController {
     public ResponseEntity<?> addArtist(@RequestBody @Valid Artist artist) {
         Artist newArtist = service.insert(artist);
 
-        URI uri = uriCreator.getURI(newArtist.getId());
+        URI uri = uriCreator.getURI(newArtist.getArtistId());
 
         return ResponseEntity.created(uri).body(CustomResponse.ofValue(newArtist));
     }
@@ -110,7 +111,7 @@ public class ArtistController {
         boolean result = service.update(artist);
         if(!result) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(CustomResponse.ofError("Cannot find artist with id: " + artist.getId()));
+                    .body(CustomResponse.ofError("Cannot find artist with id: " + artist.getArtistId()));
         }
 
         return ResponseEntity.ok(CustomResponse.ofValue(result));

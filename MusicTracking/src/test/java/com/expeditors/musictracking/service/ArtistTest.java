@@ -14,7 +14,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
+@ActiveProfiles({"inmemory"})
 public class ArtistTest {
 
     @Mock
@@ -38,7 +43,7 @@ public class ArtistTest {
                     0,
                     "Michel Jackson",
                     1.60,
-                    new Date("1950/10/02"),
+                    LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                     "Texas",
                     Genre.Pop,
                     Role.Singer),
@@ -46,7 +51,7 @@ public class ArtistTest {
                     0,
                     "Cristina Aguilera",
                     1.89,
-                    new Date("1970/02/02"),
+                    LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                     "Arizona",
                     Genre.Pop,
                     Role.Singer));
@@ -61,7 +66,7 @@ public class ArtistTest {
                                     1,
                                     "Michel Jackson",
                                     1.60,
-                                    new Date("1950/10/02"),
+                                    LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                     "Texas",
                                     Genre.Pop,
                                     Role.Singer),
@@ -69,11 +74,11 @@ public class ArtistTest {
                                     2,
                                     "Cristina Aguilera",
                                     1.89,
-                                    new Date("1970/02/02"),
+                                    LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                     "Arizona",
                                     Genre.Pop,
                                     Role.Singer)),
-                    new Date("2000/10/02"),
+                    LocalDate.parse("2000/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                     3.45,
                     Genre.Pop,
                     MediaType.MP3,
@@ -87,7 +92,7 @@ public class ArtistTest {
                                     1,
                                     "Michel Jackson",
                                     1.60,
-                                    new Date("1950/10/02"),
+                                    LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                     "Texas",
                                     Genre.Pop,
                                     Role.Singer),
@@ -95,11 +100,11 @@ public class ArtistTest {
                                     2,
                                     "Cristina Aguilera",
                                     1.89,
-                                    new Date("1970/02/02"),
+                                    LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                     "Arizona",
                                     Genre.Pop,
                                     Role.Singer)),
-                    new Date("1981/10/02"),
+                    LocalDate.parse("1981/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                     1.20,
                     Genre.Pop,
                     MediaType.Ogg,
@@ -108,12 +113,12 @@ public class ArtistTest {
                     213,
                     "Disco Majul",
                     "Colorama",
-                    new Date("2029/10/02"),
+                    LocalDate.parse("2029/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                     new Artist(
                             20,
                             "Gativideo",
                             0,
-                            new Date("2010/02/23"),
+                            LocalDate.parse("2010/02/23", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                             "Spain",
                             Genre.Pop,
                             Role.Producer),
@@ -154,12 +159,12 @@ public class ArtistTest {
         assertEquals("Manuel Turiso",service.getById(1).getName());
 
 
-        Mockito.when(artistDAO.delete(1)).thenReturn(true);
+        Mockito.when(artistDAO.deleteById(1)).thenReturn(true);
         service.deleteById(1);
 
         Mockito.when(artistDAO.update(artist)).thenReturn(false);
 
-        Mockito.verify(artistDAO).delete(1);
+        Mockito.verify(artistDAO).deleteById(1);
         Mockito.verify(artistDAO).update(artist);
 
         assertFalse(service.update(artist));
@@ -170,7 +175,7 @@ public class ArtistTest {
         Artist artist = artists.get(0);
 
         Mockito.when(artistDAO.insert(artist)).thenReturn(artist);
-        Mockito.when(artistDAO.delete(1)).thenReturn(true);
+        Mockito.when(artistDAO.deleteById(1)).thenReturn(true);
         Mockito.when(artistDAO.findById(1)).thenReturn(null);
 
         service.insert(artist);
@@ -179,7 +184,7 @@ public class ArtistTest {
 
         service.deleteById(1);
 
-        Mockito.verify(artistDAO).delete(1);
+        Mockito.verify(artistDAO).deleteById(1);
 
         assertNull(service.getById(1));
         Mockito.verify(artistDAO).findById(1);
@@ -207,5 +212,21 @@ public class ArtistTest {
         Mockito.when(artistDAO.findByName("Michel Jackson")).thenReturn(artists);
         assertEquals(2, service.getByName("Michel Jackson").size());
         Mockito.verify(artistDAO).findByName("Michel Jackson");
+
+        Mockito.when(artistDAO.findByMusicGenre(Genre.Pop)).thenReturn(artists);
+        assertEquals(2, service.getByMusiscGenre(Genre.Pop).size());
+        Mockito.verify(artistDAO).findByMusicGenre(Genre.Pop);
+
+        Mockito.when(artistDAO.findByRole(Role.Singer)).thenReturn(artists);
+        assertEquals(2, service.getByRole(Role.Singer).size());
+        Mockito.verify(artistDAO).findByRole(Role.Singer);
+
+        Mockito.when(artistDAO.findAll()).thenReturn(artists);
+        assertEquals(2, service.getAll().size());
+        Mockito.verify(artistDAO).findAll();
+
+        Mockito.when(trackDAO.findByArtist("Michel Jackson")).thenReturn(tracks);
+        assertEquals(3, service.getTracksByArtist("Michel Jackson").size());
+        Mockito.verify(trackDAO).findByArtist("Michel Jackson");
     }
 }
