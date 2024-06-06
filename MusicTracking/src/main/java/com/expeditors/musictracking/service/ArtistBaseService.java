@@ -4,7 +4,9 @@ import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.Role;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ArtistBaseService {

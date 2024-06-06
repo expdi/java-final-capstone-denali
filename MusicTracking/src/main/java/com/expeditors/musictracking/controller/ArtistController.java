@@ -1,19 +1,17 @@
 package com.expeditors.musictracking.controller;
 
+import com.expeditors.musictracking.dto.TrackArtists;
 import com.expeditors.musictracking.dto.CustomResponse;
 import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.Role;
 import com.expeditors.musictracking.service.ArtistBaseService;
-import com.expeditors.musictracking.service.ArtistService;
-import com.expeditors.musictracking.service.TrackService;
 import com.expeditors.musictracking.utils.UriCreator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;

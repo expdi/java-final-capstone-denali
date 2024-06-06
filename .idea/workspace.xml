@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4fb2f48-9868-4830-b9f5-20821c26ca31" name="Changes" comment="# Titulo no debe ser mayor a 50 caracteres, capitalizado y si es posible&#10;# en modo imperativo (Como si fuera una orden).&#10;#&#10;# (Salto de linea)&#10;&#10;# Numero de Tarea, Proyecto o Incident (Comentar o descomentar)&#10;# Tarea:&#10;# Proyecto:&#10;# Incident:&#10;# (Salto de linea)&#10;&#10;# Cuerpo/Descripcion (No mas de 72 caracteres por linea)&#10;#&#10;# (Salto de linea)&#10;&#10;# Seccion opcional, y agregar las notas necesarias&#10;# Notas:&#10;#&#10;# (Salto de linea)&#10;&#10;# Seccion opcional, descomentar para usar&#10;# Referencias:&#10;#">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicPriceTracker/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/MusicPriceTracker/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicPriceTracker/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/MusicPriceTracker/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/controller/ArtistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/controller/ArtistController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/provider/PriceProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/provider/PriceProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/service/ArtistBaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/service/ArtistBaseService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +17,13 @@
   </component>
   <component name="ExportToHTMLSettings">
     <option name="OUTPUT_DIRECTORY" value="C:\Proyectos\JAVA\java-final-capstone-denali\htmlReport" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -90,7 +96,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.MusicPriceTrackerApplication.executor": "Run",
-    "Spring Boot.MusicTrackingApplication.executor": "Run",
+    "Spring Boot.MusicTrackingApplication.executor": "Debug",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "develop",
     "kotlin-language-version-configured": "true",
@@ -254,7 +260,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/controller/ArtistController.java</url>
-          <line>71</line>
+          <line>69</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

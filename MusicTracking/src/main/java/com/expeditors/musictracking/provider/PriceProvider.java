@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
+import java.util.Base64;
 import java.util.Optional;
 
 @Component
@@ -20,10 +21,14 @@ public class PriceProvider {
         var rootUrl = "/MusicTrackPrice";
         priceUrl = rootUrl + "/{id}";
 
+        String basicAuthHeader = STR."basic \{Base64.getEncoder()
+                .encodeToString(("Raul:password").getBytes())}";
+
         this.restClient = RestClient.builder()
                 .baseUrl(baseUrl)
                 .defaultHeader("Accept", "application/json")
                 .defaultHeader("Content-Type", "application/json")
+                .defaultHeader("Authorization", basicAuthHeader)
                 .build();
     }
 
