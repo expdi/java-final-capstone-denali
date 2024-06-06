@@ -1,5 +1,7 @@
 package com.expeditors.musictracking.controller;
 
+import com.expeditors.musictracking.dto.TrackArtists;
+import com.expeditors.musictracking.dto.TrackNewArtists;
 import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Genre;
@@ -378,6 +380,103 @@ public class TrackControllerTest {
         String locHeader = result.getResponse().getHeader("Location");
         assertNotNull(locHeader);
         System.out.println("locHeader: " + locHeader);
+    }
+
+    @Test
+    @WithMockUser (roles={"ADMIN"})
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
+    public void addTracksArtist() throws Exception {
+        ResultActions actions = mockMvc.perform( get("/Tracks")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        MvcResult result = actions.andReturn();
+
+        String jsonResult = result.getResponse().getContentAsString();
+        JsonNode node = mapper.readTree(jsonResult);
+        List<Track> tracks = mapper.readValue(node.get("entity").toString(), new TypeReference<List<Track>>() {});
+        Track lastTrack = tracks.getLast();
+
+         actions = mockMvc.perform( get("/Artist")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON));
+
+         result = actions.andReturn();
+
+         jsonResult = result.getResponse().getContentAsString();
+         node = mapper.readTree(jsonResult);
+         List<Artist> artists = mapper.readValue(node.get("entity").toString(), new TypeReference<List<Artist>>() {});
+         Artist lastArtist = artists.getLast();
+
+        TrackArtists trackArtists = new TrackArtists();
+        trackArtists.setTrack(lastTrack);
+        trackArtists.setArtistIds(List.of(lastArtist.getArtistId()));
+
+        String jsonString = mapper.writeValueAsString(trackArtists);
+
+        actions = mockMvc.perform(post("/Tracks/addTrackArtist")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonString));
+
+        actions = actions.andExpect(status().isCreated());
+
+        result = actions.andReturn();
+
+        jsonResult = result.getResponse().getContentAsString();
+        node = mapper.readTree(jsonResult);
+        Track updatedTrack = mapper.treeToValue(node.get("entity"), Track.class);
+
+        assertTrue(!updatedTrack.getArtists().stream().filter(f -> f.getArtistId() == lastArtist.getArtistId()).toList().isEmpty());
+    }
+
+    @Test
+    @WithMockUser (roles={"ADMIN"})
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
+    public void addTracksNewArtist() throws Exception {
+        ResultActions actions = mockMvc.perform( get("/Tracks")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        MvcResult result = actions.andReturn();
+
+        String jsonResult = result.getResponse().getContentAsString();
+        JsonNode node = mapper.readTree(jsonResult);
+        List<Track> tracks = mapper.readValue(node.get("entity").toString(), new TypeReference<List<Track>>() {});
+        Track lastTrack = tracks.getLast();
+
+
+        Artist lastArtist = new Artist(
+                "Michael Jackson",
+                1.92,
+                LocalDate.parse("1968/08/15", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                "California",
+                Genre.Pop,
+                Role.Singer);
+
+
+        TrackNewArtists trackArtists = new TrackNewArtists();
+        trackArtists.setTrack(lastTrack);
+        trackArtists.setArtists(List.of(lastArtist));
+
+        String jsonString = mapper.writeValueAsString(trackArtists);
+
+        actions = mockMvc.perform(post("/Tracks/addTrackNewArtist")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonString));
+
+        actions = actions.andExpect(status().isCreated());
+
+        result = actions.andReturn();
+
+        jsonResult = result.getResponse().getContentAsString();
+        node = mapper.readTree(jsonResult);
+        Track updatedTrack = mapper.treeToValue(node.get("entity"), Track.class);
+
+        assertTrue(!updatedTrack.getArtists().stream().filter(f -> f.getName().equals(lastArtist.getName())).toList().isEmpty());
     }
 
     @Test

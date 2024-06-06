@@ -1,6 +1,8 @@
 package com.expeditors.musictracking.controller;
 
 import com.expeditors.musictracking.dto.CustomResponse;
+import com.expeditors.musictracking.dto.TrackArtists;
+import com.expeditors.musictracking.dto.TrackNewArtists;
 import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Filters;
@@ -110,6 +112,24 @@ public class TrackController {
     @PostMapping
     public ResponseEntity<?> addTrack(@RequestBody @Valid Track track) {
         Track newTrack = service.insert(track);
+
+        URI uri = uriCreator.getURI(newTrack.getTrackId());
+
+        return ResponseEntity.created(uri).body(CustomResponse.ofValue(newTrack));
+    }
+
+    @PostMapping("/addTrackArtist")
+    public ResponseEntity<?> addTrackArtist(@RequestBody @Valid TrackArtists trackArtists) {
+        Track newTrack = service.addTrackArtists(trackArtists.track,trackArtists.artistIds);
+
+        URI uri = uriCreator.getURI(newTrack.getTrackId());
+
+        return ResponseEntity.created(uri).body(CustomResponse.ofValue(newTrack));
+    }
+
+    @PostMapping("/addTrackNewArtist")
+    public ResponseEntity<?> addTrackArtist(@RequestBody @Valid TrackNewArtists trackNEwArtists) {
+        Track newTrack = service.addTracksNewArtists(trackNEwArtists.track,trackNEwArtists.artists);
 
         URI uri = uriCreator.getURI(newTrack.getTrackId());
 

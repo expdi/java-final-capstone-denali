@@ -1,6 +1,7 @@
 package com.expeditors.musictracking.service;
 
 import com.expeditors.musictracking.dao.TrackBaseDAO;
+import com.expeditors.musictracking.dao.inmemory.ArtistDAO;
 import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Filters;
@@ -43,8 +44,29 @@ public class TrackTest {
     @Autowired
     private TrackService justSpringService;
 
+    @Autowired
+    private ArtistService artistService;
+
     @Mock
     private PriceProvider priceProvider;
+
+    List<Artist> artists = List.of(
+            new Artist(
+                    1,
+                    "Michel Jackson",
+                    1.60,
+                    LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                    "Texas",
+                    Genre.Pop,
+                    Role.Singer),
+            new Artist(
+                    2,
+                    "Cristina Aguilera",
+                    1.89,
+                    LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                    "Arizona",
+                    Genre.Pop,
+                    Role.Singer));
 
     List<Track> tracks = List.of(
             new Track(
@@ -113,6 +135,8 @@ public class TrackTest {
                             Genre.Pop,
                             Role.Producer),
                     10.40));
+    @Autowired
+    private ArtistDAO artistDAO;
 
     @Test
     public void serviceInsert() {
@@ -321,5 +345,27 @@ public class TrackTest {
         assertEquals( 1, justSpringService.getByYear(2000).size());
         assertEquals( 0, justSpringService.getByYear(1992).size());
         assertEquals( 1, justSpringService.getByYear(1981).size());
+    }
+
+    @Test
+    @Transactional
+    public void addTrackArtist() {
+        tracks.forEach(justSpringService::insert);
+        artists.forEach(artistService::insert);
+
+        Track track = justSpringService.addTrackArtists(tracks.get(0),artists.stream().map(a -> a.getArtistId()).toList());
+
+        assertEquals( 4, track.getArtists().size());
+    }
+
+    @Test
+    @Transactional
+    public void addTrackNewArtist() {
+        tracks.forEach(justSpringService::insert);
+        artists.forEach(artistService::insert);
+
+        Track track = justSpringService.addTracksNewArtists(tracks.get(0),artists);
+
+        assertEquals( 2, track.getArtists().size());
     }
 }

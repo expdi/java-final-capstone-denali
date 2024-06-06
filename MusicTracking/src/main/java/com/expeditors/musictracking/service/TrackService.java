@@ -2,6 +2,7 @@ package com.expeditors.musictracking.service;
 
 import com.expeditors.musictracking.dao.BaseDAO;
 import com.expeditors.musictracking.dao.TrackBaseDAO;
+import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Filters;
 import com.expeditors.musictracking.model.enumerator.MediaType;
@@ -61,6 +62,16 @@ public class TrackService implements TrackBaseService {
 
     public List<Track> getByDuration(double duration, Filters filter) {
         return trackDAO.findByDuration(duration,filter);
+    }
+
+    @Override
+    public Track addTrackArtists(Track track, List<Integer> artistIds) {
+        return trackDAO.addTrackArtists(track, artistIds);
+    }
+
+    @Override
+    public Track addTracksNewArtists(Track track, List<Artist> artists) {
+        return trackDAO.addTracksNewArtists(track,artists);
     }
 
     public boolean update(Track Track) {

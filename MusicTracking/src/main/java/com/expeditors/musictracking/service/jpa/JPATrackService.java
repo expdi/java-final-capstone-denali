@@ -85,6 +85,33 @@ public class JPATrackService implements TrackBaseService {
         return trackDAO.findAll(byDuration(duration,filter));
     }
 
+    @Override
+    public Track addTrackArtists(Track track, List<Integer> artistIds) {
+        track = trackDAO.findById(track.getTrackId()).get();
+        if (track.getArtists() == null) {
+            track.setArtists(new ArrayList<>());
+        }
+        List<Artist> artists = artistDAO.findAllById(artistIds);
+        track.getArtists().forEach(artist -> {
+            if (artists.contains(artist)) {
+                artists.remove(artist);
+            }
+        });
+        track.getArtists().addAll(artists);
+
+        return trackDAO.save(track);
+    }
+
+    @Override
+    public Track addTracksNewArtists(Track track, List<Artist> artists) {
+        track = trackDAO.findById(track.getTrackId()).get();
+        if (track.getArtists() == null) {
+            track.setArtists(new ArrayList<>());
+        }
+        track.getArtists().addAll(artists);
+        return trackDAO.save(track);
+    }
+
     public boolean update(Track track) {
         try {
             if(!trackDAO.existsById(track.getTrackId())) {

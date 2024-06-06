@@ -108,4 +108,46 @@ public class TrackDAO implements TrackBaseDAO {
            return track.getIssueDate().getYear() == year;
         }).toList();
     }
+
+    @Override
+    public Track addTrackArtists(Track track, List<Integer> artistIds) {
+        if (tracks.containsValue(track)) {
+            Track trackSelected = tracks.get(track.getTrackId());
+            if (track.getArtists() == null) {
+                track.setArtists(new ArrayList<>());
+            }
+            List<Artist> artists = new ArrayList<>();
+            artistIds.forEach(artistId -> {
+                artists.add(artistDAO.findById(artistId));
+            });
+            artists.addAll(track.getArtists());
+            track.setArtists(artists);
+        } else {
+            List<Artist> artists = new ArrayList<>();
+            artistIds.forEach(artistId -> {
+                artists.add(artistDAO.findById(artistId));
+            });
+            track.setArtists(artists);
+            insert(track);
+        }
+        tracks.replace(track.getTrackId(),track);
+        return track;
+    }
+
+    @Override
+    public Track addTracksNewArtists(Track track, List<Artist> artists) {
+        if (tracks.containsValue(track)) {
+            if (track.getArtists() == null) {
+                track.setArtists(new ArrayList<>());
+            }
+            List<Artist> artistsNew = new ArrayList<>();
+            artistsNew.addAll(track.getArtists());
+            track.setArtists(artistsNew);
+        } else {
+            track.setArtists(artists);
+            insert(track);
+        }
+        tracks.replace(track.getTrackId(),track);
+        return track;
+    }
 }

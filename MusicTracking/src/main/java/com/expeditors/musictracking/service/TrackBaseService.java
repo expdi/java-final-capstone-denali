@@ -1,5 +1,6 @@
 package com.expeditors.musictracking.service;
 
+import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Filters;
 import com.expeditors.musictracking.model.enumerator.MediaType;
@@ -23,7 +24,12 @@ public interface TrackBaseService {
     public List<Track> getByAlbum(String album);
 
     public List<Track> getByYear(int year);
+
     public List<Track> getByDuration(double duration, Filters filter);
+
+    public Track addTrackArtists(Track track ,List<Integer> artistIds);
+
+    public Track addTracksNewArtists(Track track ,List<Artist> artists);
 
     public boolean update(Track Track);
 
