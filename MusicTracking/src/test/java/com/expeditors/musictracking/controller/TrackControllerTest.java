@@ -236,7 +236,7 @@ public class TrackControllerTest {
 
     @Test
     public void getByArtist() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/getByArtist/{artist}", "Michael Jackson")
+        MockHttpServletRequestBuilder builder = get("/Tracks/getByArtist/{artist}", "Gativideo")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 

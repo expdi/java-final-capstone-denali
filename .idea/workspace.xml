@@ -6,9 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b4fb2f48-9868-4830-b9f5-20821c26ca31" name="Changes" comment="# Titulo no debe ser mayor a 50 caracteres, capitalizado y si es posible&#10;# en modo imperativo (Como si fuera una orden).&#10;#&#10;# (Salto de linea)&#10;&#10;# Numero de Tarea, Proyecto o Incident (Comentar o descomentar)&#10;# Tarea:&#10;# Proyecto:&#10;# Incident:&#10;# (Salto de linea)&#10;&#10;# Cuerpo/Descripcion (No mas de 72 caracteres por linea)&#10;#&#10;# (Salto de linea)&#10;&#10;# Seccion opcional, y agregar las notas necesarias&#10;# Notas:&#10;#&#10;# (Salto de linea)&#10;&#10;# Seccion opcional, descomentar para usar&#10;# Referencias:&#10;#">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/ArtistTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/ArtistTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/TrackTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/TrackTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/jpa/JPAArtistServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service/jpa/JPAArtistServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/service/jpa/JPAArtistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/service/jpa/JPAArtistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/ArtistControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/ArtistControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/TrackControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/TrackControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +53,7 @@
     "JUnit.ArtistControllerTest.getByName.executor": "Run",
     "JUnit.ArtistControllerTest.getByRole.executor": "Run",
     "JUnit.ArtistControllerTest.getTracksByArtist.executor": "Run",
+    "JUnit.ArtistControllerTest.updateArtist.executor": "Run",
     "JUnit.ArtistTest.executor": "Run",
     "JUnit.ArtistTest.serviceSearch.executor": "Run",
     "JUnit.JPAArtistServiceTest.executor": "Coverage",
@@ -78,8 +80,8 @@
     "JUnit.TrackTest.getByYear.executor": "Run",
     "JUnit.TrackTest.getTrackById.executor": "Run",
     "JUnit.controller in MusicTracking.executor": "Run",
-    "JUnit.java in MusicTracking.executor": "Coverage",
-    "JUnit.musictracking in MusicTracking.executor": "Coverage",
+    "JUnit.java in MusicTracking.executor": "Run",
+    "JUnit.musictracking in MusicTracking.executor": "Run",
     "JUnit.service in MusicTracking.executor": "Coverage",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -119,49 +121,59 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.musictracking in MusicTracking">
-    <configuration name="ArtistTest.serviceSearch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ArtistControllerTest.getTracksByArtist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MusicTracking" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.expeditors.musictracking.service.*" />
+          <option name="PATTERN" value="com.expeditors.musictracking.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.expeditors.musictracking.service" />
-      <option name="MAIN_CLASS_NAME" value="com.expeditors.musictracking.service.ArtistTest" />
-      <option name="METHOD_NAME" value="serviceSearch" />
+      <option name="PACKAGE_NAME" value="com.expeditors.musictracking.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.expeditors.musictracking.controller.ArtistControllerTest" />
+      <option name="METHOD_NAME" value="getTracksByArtist" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="JPAArtistServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ArtistControllerTest.updateArtist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MusicTracking" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.expeditors.musictracking.service.jpa.*" />
+          <option name="PATTERN" value="com.expeditors.musictracking.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.expeditors.musictracking.service.jpa" />
-      <option name="MAIN_CLASS_NAME" value="com.expeditors.musictracking.service.jpa.JPAArtistServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="com.expeditors.musictracking.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.expeditors.musictracking.controller.ArtistControllerTest" />
+      <option name="METHOD_NAME" value="updateArtist" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="JPAArtistServiceTest.serviceSearch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TrackControllerTest.getByArtist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MusicTracking" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.expeditors.musictracking.service.jpa.*" />
+          <option name="PATTERN" value="com.expeditors.musictracking.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.expeditors.musictracking.service.jpa" />
-      <option name="MAIN_CLASS_NAME" value="com.expeditors.musictracking.service.jpa.JPAArtistServiceTest" />
-      <option name="METHOD_NAME" value="serviceSearch" />
+      <option name="PACKAGE_NAME" value="com.expeditors.musictracking.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.expeditors.musictracking.controller.TrackControllerTest" />
+      <option name="METHOD_NAME" value="getByArtist" />
       <option name="TEST_OBJECT" value="method" />
+      <dir value="$PROJECT_DIR$/MusicTracking/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in MusicTracking" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MusicTracking" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/MusicTracking/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -170,14 +182,6 @@
       <module name="MusicTracking" />
       <option name="TEST_OBJECT" value="directory" />
       <dir value="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="service in MusicTracking" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MusicTracking" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/service" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -201,10 +205,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.musictracking in MusicTracking" />
-        <item itemvalue="JUnit.JPAArtistServiceTest.serviceSearch" />
-        <item itemvalue="JUnit.JPAArtistServiceTest" />
-        <item itemvalue="JUnit.service in MusicTracking" />
-        <item itemvalue="JUnit.ArtistTest.serviceSearch" />
+        <item itemvalue="JUnit.TrackControllerTest.getByArtist" />
+        <item itemvalue="JUnit.java in MusicTracking" />
+        <item itemvalue="JUnit.ArtistControllerTest.updateArtist" />
+        <item itemvalue="JUnit.ArtistControllerTest.getTracksByArtist" />
       </list>
     </recent_temporary>
   </component>
@@ -268,16 +272,6 @@
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/service/jpa/JPAArtistService.java</url>
-          <line>70</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/service/jpa/JPAArtistService.java</url>
-          <line>74</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/MusicTracking/src/main/java/com/expeditors/musictracking/service/jpa/JPATrackService.java</url>
           <line>51</line>
           <option name="timeStamp" value="17" />
@@ -302,6 +296,11 @@
           <line>235</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/MusicTracking/src/test/java/com/expeditors/musictracking/controller/ArtistControllerTest.java</url>
+          <line>376</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -311,7 +310,7 @@
       <FILTER>com.expeditors.musictracking.service.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/java_final_capstone_denali$java_in_MusicTracking.ic" NAME="java in MusicTracking Coverage Results" MODIFIED="1717620949821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
-    <SUITE FILE_PATH="coverage/java_final_capstone_denali$musictracking_in_MusicTracking.ic" NAME="musictracking in MusicTracking Coverage Results" MODIFIED="1717674987979" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/java_final_capstone_denali$musictracking_in_MusicTracking.ic" NAME="musictracking in MusicTracking Coverage Results" MODIFIED="1717675090185" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/java_final_capstone_denali$JPAArtistServiceTest.ic" NAME="JPAArtistServiceTest Coverage Results" MODIFIED="1717625353563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.expeditors.musictracking.service.jpa.*</FILTER>
     </SUITE>

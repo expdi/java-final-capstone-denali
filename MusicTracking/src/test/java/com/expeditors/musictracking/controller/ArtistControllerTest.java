@@ -242,7 +242,7 @@ public class ArtistControllerTest {
 
     @Test
     public void getTracksByArtist() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Artist/getTracks/{artist}", "Michael Jackson")
+        MockHttpServletRequestBuilder builder = get("/Artist/getTracks/{artist}", "Gativideo")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -355,16 +355,27 @@ public class ArtistControllerTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Transactional
     public void updateArtist() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Artist/{id}", 1)
+        ResultActions actions = mockMvc.perform( get("/Artist")
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON));
 
-        ResultActions actions = mockMvc.perform(builder)
-                .andExpect(status().isOk());
         MvcResult result = actions.andReturn();
 
         String jsonResult = result.getResponse().getContentAsString();
         JsonNode node = mapper.readTree(jsonResult);
+        List<Artist> artists = mapper.readValue(node.get("entity").toString(), new TypeReference<List<Artist>>() {});
+        Artist lastArtist = artists.getLast();
+
+        MockHttpServletRequestBuilder builder = get("/Artist/{id}", lastArtist.getArtistId())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        actions = mockMvc.perform(builder)
+                .andExpect(status().isOk());
+        result = actions.andReturn();
+
+        jsonResult = result.getResponse().getContentAsString();
+        node = mapper.readTree(jsonResult);
         Artist artist = mapper.treeToValue(node.get("entity"), Artist.class);
         artist.setName("Billy Joel");
 
@@ -377,7 +388,7 @@ public class ArtistControllerTest {
 
         actions.andExpect(status().isOk());
 
-        builder = get("/Artist/{id}", 1)
+        builder = get("/Artist/{id}", lastArtist.getArtistId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
