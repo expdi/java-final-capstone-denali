@@ -235,6 +235,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     public void getByArtist() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Tracks/getByArtist/{artist}", "Gativideo")
                 .accept(MediaType.APPLICATION_JSON)
@@ -261,6 +262,7 @@ public class TrackControllerTest {
     }
 
     @Test
+    @WithMockUser (roles={"ADMIN"})
     public void getByMediaType() throws Exception {
         MockHttpServletRequestBuilder builder = get("/Tracks/getByMediaType/{mediaType}", "MP3")
                 .accept(MediaType.APPLICATION_JSON)
