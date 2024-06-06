@@ -212,5 +212,21 @@ public class ArtistTest {
         Mockito.when(artistDAO.findByName("Michel Jackson")).thenReturn(artists);
         assertEquals(2, service.getByName("Michel Jackson").size());
         Mockito.verify(artistDAO).findByName("Michel Jackson");
+
+        Mockito.when(artistDAO.findByMusicGenre(Genre.Pop)).thenReturn(artists);
+        assertEquals(2, service.getByMusiscGenre(Genre.Pop).size());
+        Mockito.verify(artistDAO).findByMusicGenre(Genre.Pop);
+
+        Mockito.when(artistDAO.findByRole(Role.Singer)).thenReturn(artists);
+        assertEquals(2, service.getByRole(Role.Singer).size());
+        Mockito.verify(artistDAO).findByRole(Role.Singer);
+
+        Mockito.when(artistDAO.findAll()).thenReturn(artists);
+        assertEquals(2, service.getAll().size());
+        Mockito.verify(artistDAO).findAll();
+
+        Mockito.when(trackDAO.findByArtist("Michel Jackson")).thenReturn(tracks);
+        assertEquals(3, service.getTracksByArtist("Michel Jackson").size());
+        Mockito.verify(trackDAO).findByArtist("Michel Jackson");
     }
 }

@@ -287,6 +287,24 @@ public class TrackTest {
 
     @Test
     @Transactional
+    public void getByAlbum() {
+        tracks.forEach(justSpringService::insert);
+
+        assertFalse(justSpringService.getByAlbum("Colorama").isEmpty());
+        // No results
+        assertEquals( 0, justSpringService.getByAlbum("Do Do Do").size());
+    }
+
+    @Test
+    @Transactional
+    public void getAll() {
+        tracks.forEach(justSpringService::insert);
+
+        assertFalse(justSpringService.getAll().isEmpty());
+    }
+
+    @Test
+    @Transactional
     public void getByDuration() {
         tracks.forEach(justSpringService::insert);
         assertEquals( 1, justSpringService.getByDuration(1, Filters.LessThan).size());

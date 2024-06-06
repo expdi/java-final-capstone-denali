@@ -183,5 +183,9 @@ public class JPAArtistServiceTest {
         assertNull(service.getById(100));
 
         assertTrue(service.getByName(artist.getName()).size() > 0);
+
+        assertTrue(service.getByRole(Role.Singer).size() > 0);
+        assertFalse(service.getTracksByArtist(artist.getName()).isEmpty());
+        assertFalse(service.getByMusiscGenre(Genre.Pop).isEmpty());
     }
 }
