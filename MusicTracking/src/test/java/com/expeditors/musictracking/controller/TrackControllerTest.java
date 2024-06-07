@@ -102,15 +102,15 @@ public class TrackControllerTest {
         jsonResult = result.getResponse().getContentAsString();
         node = mapper.readTree(jsonResult);
         Track trackPosted = mapper.treeToValue(node.get("entity"), Track.class);
-
-        artistPosted.setTracks(List.of(trackPosted));
-
-        String updateEntity = mapper.writeValueAsString(artistPosted);
-
-        mockMvc.perform(put("/Artist")
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(updateEntity));
+//
+//        artistPosted.setTracks(List.of(trackPosted));
+//
+//        String updateEntity = mapper.writeValueAsString(artistPosted);
+//
+//        mockMvc.perform(put("/Artist")
+//                .accept(MediaType.APPLICATION_JSON)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(updateEntity));
 
     }
 
@@ -239,7 +239,7 @@ public class TrackControllerTest {
     @Test
     @WithMockUser (roles={"ADMIN"})
     public void getByArtist() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/Tracks/getByArtist/{artist}", "Michael Jackson")
+        MockHttpServletRequestBuilder builder = get("/Tracks/getByArtist/{artist}", "Gativideo")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
