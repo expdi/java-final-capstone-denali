@@ -1,0 +1,6 @@
+FROM azul/zulu-openjdk:21-latest
+WORKDIR /app
+COPY target/MusicPriceTracker-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8181
+# Define the command to run your application
+CMD ["java","-jar","app.jar"]
