@@ -1,6 +1,7 @@
 package com.expeditors.musictracking.service;
 
 import com.expeditors.musictracking.dao.TrackBaseDAO;
+import com.expeditors.musictracking.dao.inmemory.ArtistDAO;
 import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Filters;
@@ -8,6 +9,7 @@ import com.expeditors.musictracking.model.enumerator.Genre;
 import com.expeditors.musictracking.model.enumerator.MediaType;
 import com.expeditors.musictracking.model.enumerator.Role;
 import com.expeditors.musictracking.provider.PriceProvider;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,8 +19,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith({MockitoExtension.class, SpringExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest
+@ActiveProfiles({"inmemory"})
 public class TrackTest {
 
     @Mock
@@ -38,8 +44,29 @@ public class TrackTest {
     @Autowired
     private TrackService justSpringService;
 
+    @Autowired
+    private ArtistService artistService;
+
     @Mock
     private PriceProvider priceProvider;
+
+    List<Artist> artists = List.of(
+            new Artist(
+                    1,
+                    "Michel Jackson",
+                    1.60,
+                    LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                    "Texas",
+                    Genre.Pop,
+                    Role.Singer),
+            new Artist(
+                    2,
+                    "Cristina Aguilera",
+                    1.89,
+                    LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                    "Arizona",
+                    Genre.Pop,
+                    Role.Singer));
 
     List<Track> tracks = List.of(
             new Track(
@@ -48,22 +75,22 @@ public class TrackTest {
                     "Love",
                     "My Love is the end",
                     List.of( new Artist(
-                                    1,
+                                    45,
                                     "Michel Jackson",
                                     1.60,
-                                    new Date("1950/10/02"),
+                                    LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                     "Texas",
                                     Genre.Pop,
                                     Role.Singer),
                             new Artist(
-                                    2,
+                                    223,
                                     "Cristina Aguilera",
                                     1.89,
-                                    new Date("1970/02/02"),
+                                    LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                     "Arizona",
                                     Genre.Pop,
                                     Role.Singer)),
-                    new Date("2000/10/02"),
+                    LocalDate.parse("2000/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                     3.45,
                     Genre.Pop,
                     MediaType.MP3,
@@ -74,22 +101,22 @@ public class TrackTest {
                     "Memories",
                     "World is fine",
                     List.of( new Artist(
-                                    1,
+                                    112,
                                     "Michel Jackson",
                                     1.60,
-                                    new Date("1950/10/02"),
+                                    LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                     "Texas",
                                     Genre.Pop,
                                     Role.Singer),
                             new Artist(
-                                    2,
+                                    245,
                                     "Cristina Aguilera",
                                     1.89,
-                                    new Date("1970/02/02"),
+                                    LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                     "Arizona",
                                     Genre.Pop,
                                     Role.Singer)),
-                    new Date("1981/10/02"),
+                    LocalDate.parse("1981/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                     1.20,
                     Genre.Pop,
                     MediaType.Ogg,
@@ -98,16 +125,18 @@ public class TrackTest {
                     213,
                     "Disco Majul",
                     "Colorama",
-                    new Date("2029/10/02"),
+                    LocalDate.parse("2029/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                     new Artist(
-                                    20,
-                                    "Gativideo",
-                                    0,
-                                    new Date("2010/02/23"),
-                                    "Spain",
-                                    Genre.Pop,
-                                    Role.Producer),
+                            20,
+                            "Gativideo",
+                            0,
+                            LocalDate.parse("2010/02/23", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                            "Spain",
+                            Genre.Pop,
+                            Role.Producer),
                     10.40));
+    @Autowired
+    private ArtistDAO artistDAO;
 
     @Test
     public void serviceInsert() {
@@ -143,12 +172,12 @@ public class TrackTest {
         assertEquals("Wonderful World",service.getById(1).getTitle());
 
 
-        Mockito.when(trackDao.delete(1)).thenReturn(true);
+        Mockito.when(trackDao.deleteById(1)).thenReturn(true);
         service.deleteById(1);
 
         Mockito.when(trackDao.update(track)).thenReturn(false);
 
-        Mockito.verify(trackDao).delete(1);
+        Mockito.verify(trackDao).deleteById(1);
         Mockito.verify(trackDao).update(track);
 
         assertFalse(service.update(track));
@@ -159,7 +188,7 @@ public class TrackTest {
         Track track = tracks.get(0);
 
         Mockito.when(trackDao.insert(track)).thenReturn(track);
-        Mockito.when(trackDao.delete(1)).thenReturn(true);
+        Mockito.when(trackDao.deleteById(1)).thenReturn(true);
         Mockito.when(trackDao.findById(1)).thenReturn(null);
 
         service.insert(track);
@@ -168,7 +197,7 @@ public class TrackTest {
 
         service.deleteById(1);
 
-        Mockito.verify(trackDao).delete(1);
+        Mockito.verify(trackDao).deleteById(1);
 
         assertNull(service.getById(1));
         Mockito.verify(trackDao).findById(1);
@@ -197,13 +226,16 @@ public class TrackTest {
         Mockito.verify(trackDao).findByTitle("Disco Majul");
     }
 
-    @Test public void getTrackById() {
+    @Test
+    @Transactional
+    public void getTrackById() {
         tracks.forEach(justSpringService::insert);
 
         var track = service.getById(1);
     }
 
     @Test
+    @Transactional
     public void getTracksByArtist() {
         Track track1 = new Track(
                 0,
@@ -214,7 +246,7 @@ public class TrackTest {
                                 1,
                                 "Michel Jackson",
                                 1.60,
-                                new Date("1950/10/02"),
+                                LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                 "Texas",
                                 Genre.Pop,
                                 Role.Singer),
@@ -222,42 +254,42 @@ public class TrackTest {
                                 2,
                                 "Katy Perry",
                                 1.89,
-                                new Date("1970/02/02"),
+                                LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                                 "Arizona",
                                 Genre.Pop,
                                 Role.Singer)),
-                new Date("1950/10/02"),
+                LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                 1.20,
                 Genre.Pop,
                 MediaType.MP3,
                 10.40);
         Track track2 =
-        new Track(
-                0,
-                213,
-                "Memories",
-                "World is fine",
-                List.of( new Artist(
-                                1,
-                                "Michel Jackson",
-                                1.60,
-                                new Date("1950/10/02"),
-                                "Texas",
-                                Genre.Pop,
-                                Role.Singer),
-                        new Artist(
-                                2,
-                                "Cristina Aguilera",
-                                1.89,
-                                new Date("1970/02/02"),
-                                "Arizona",
-                                Genre.Pop,
-                                Role.Singer)),
-                new Date("1950/10/02"),
-                1.20,
-                Genre.Pop,
-                MediaType.MP3,
-                10.40);
+                new Track(
+                        0,
+                        213,
+                        "Memories",
+                        "World is fine",
+                        List.of( new Artist(
+                                        1,
+                                        "Michel Jackson",
+                                        1.60,
+                                        LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                                        "Texas",
+                                        Genre.Pop,
+                                        Role.Singer),
+                                new Artist(
+                                        2,
+                                        "Cristina Aguilera",
+                                        1.89,
+                                        LocalDate.parse("1970/02/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                                        "Arizona",
+                                        Genre.Pop,
+                                        Role.Singer)),
+                        LocalDate.parse("1950/10/02", DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                        1.20,
+                        Genre.Pop,
+                        MediaType.MP3,
+                        10.40);
 
         tracks.forEach(justSpringService::insert);
 
@@ -268,6 +300,7 @@ public class TrackTest {
     }
 
     @Test
+    @Transactional
     public void getByMediaType() {
         tracks.forEach(justSpringService::insert);
 
@@ -277,8 +310,27 @@ public class TrackTest {
     }
 
     @Test
+    @Transactional
+    public void getByAlbum() {
+        tracks.forEach(justSpringService::insert);
+
+        assertFalse(justSpringService.getByAlbum("Colorama").isEmpty());
+        // No results
+        assertEquals( 0, justSpringService.getByAlbum("Do Do Do").size());
+    }
+
+    @Test
+    @Transactional
+    public void getAll() {
+        tracks.forEach(justSpringService::insert);
+
+        assertFalse(justSpringService.getAll().isEmpty());
+    }
+
+    @Test
+    @Transactional
     public void getByDuration() {
-        //tracks.forEach(justSpringService::insert);
+        tracks.forEach(justSpringService::insert);
         assertEquals( 1, justSpringService.getByDuration(1, Filters.LessThan).size());
         assertEquals( 2, justSpringService.getByDuration(0.3, Filters.GreaterThan).size());
         assertEquals( 1, justSpringService.getByDuration(1.20, Filters.Equals).size());
@@ -286,11 +338,34 @@ public class TrackTest {
     }
 
     @Test
+    @Transactional
     public void getByYear() {
-        //tracks.forEach(justSpringService::insert);
+        tracks.forEach(justSpringService::insert);
 
         assertEquals( 1, justSpringService.getByYear(2000).size());
         assertEquals( 0, justSpringService.getByYear(1992).size());
         assertEquals( 1, justSpringService.getByYear(1981).size());
+    }
+
+    @Test
+    @Transactional
+    public void addTrackArtist() {
+        tracks.forEach(justSpringService::insert);
+        artists.forEach(artistService::insert);
+
+        Track track = justSpringService.addTrackArtists(tracks.get(0),artists.stream().map(a -> a.getArtistId()).toList());
+
+        assertEquals( 4, track.getArtists().size());
+    }
+
+    @Test
+    @Transactional
+    public void addTrackNewArtist() {
+        tracks.forEach(justSpringService::insert);
+        artists.forEach(artistService::insert);
+
+        Track track = justSpringService.addTracksNewArtists(tracks.get(0),artists);
+
+        assertEquals( 2, track.getArtists().size());
     }
 }

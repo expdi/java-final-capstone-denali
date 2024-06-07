@@ -29,7 +29,7 @@ CREATE TABLE rel_track_artist (
                                   rel_track_artist_id INT GENERATED ALWAYS AS IDENTITY,
                                   artist_id INT,
                                   track_id INT,
-                                  CONSTRAINT rel_track_artist_pkey PRIMARY KEY (artist_id, track_id)
+                                  CONSTRAINT rel_track_artist_pkey PRIMARY KEY (artist_id, track_id),
                                   FOREIGN KEY (artist_id) REFERENCES artist(artist_id),
                                   FOREIGN KEY (track_id) REFERENCES track(track_id)
 );

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
+import java.util.Base64;
 import java.util.Optional;
 
 @Component
@@ -16,14 +17,18 @@ public class PriceProvider {
 
 
     public PriceProvider() {
-        var baseUrl = "http://localhost:8181";
+        var baseUrl = "http://localhost:8082";
         var rootUrl = "/MusicTrackPrice";
         priceUrl = rootUrl + "/{id}";
+
+        String basicAuthHeader = STR."basic \{Base64.getEncoder()
+                .encodeToString(("Raul:password").getBytes())}";
 
         this.restClient = RestClient.builder()
                 .baseUrl(baseUrl)
                 .defaultHeader("Accept", "application/json")
                 .defaultHeader("Content-Type", "application/json")
+                .defaultHeader("Authorization", basicAuthHeader)
                 .build();
     }
 
@@ -35,7 +40,7 @@ public class PriceProvider {
 
         Optional<Price> price = Optional.ofNullable(result.getBody());
 
-        track.setPrice(price.map(Price::getPrice).orElse(0.0));
+        track.setLastPrice(price.map(Price::getPrice).orElse(0.0));
     }
 
 

@@ -2,18 +2,21 @@ package com.expeditors.musictracking.service;
 
 import com.expeditors.musictracking.dao.BaseDAO;
 import com.expeditors.musictracking.dao.TrackBaseDAO;
+import com.expeditors.musictracking.model.Artist;
 import com.expeditors.musictracking.model.Track;
 import com.expeditors.musictracking.model.enumerator.Filters;
 import com.expeditors.musictracking.model.enumerator.MediaType;
 import com.expeditors.musictracking.provider.PriceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TrackService {
+@Profile("inmemory")
+public class TrackService implements TrackBaseService {
 
     @Autowired
     private TrackBaseDAO trackDAO;
@@ -61,12 +64,22 @@ public class TrackService {
         return trackDAO.findByDuration(duration,filter);
     }
 
+    @Override
+    public Track addTrackArtists(Track track, List<Integer> artistIds) {
+        return trackDAO.addTrackArtists(track, artistIds);
+    }
+
+    @Override
+    public Track addTracksNewArtists(Track track, List<Artist> artists) {
+        return trackDAO.addTracksNewArtists(track,artists);
+    }
+
     public boolean update(Track Track) {
         return trackDAO.update(Track);
     }
 
     public boolean deleteById(int id) {
-        return trackDAO.delete(id);
+        return trackDAO.deleteById(id);
     }
 
     public List<Track> setTrackPrice(List<Track> tracks) {
